@@ -101,18 +101,8 @@ public class TableroController implements Initializable {
                 board.setSymbol(i, j, currentPlayer);
                 boton.setText(currentPlayer + "");
                 boton.setDisable(true);
-                if (board.HayGanador(currentPlayer)) {
-                    desactivarBotones();
-                    winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
-                    winnerLabel.setAlignment(Pos.CENTER);
-                    Utility.styleLabel(winnerLabel, 30, true);
-                    winnerLabel.setTextFill(Color.WHITE);
-                } else if (board.isFull() && !board.HayGanador(currentPlayer)) {
-                    winnerLabel.setText("EMPATE");
-                    winnerLabel.setAlignment(Pos.CENTER);
-                    Utility.styleLabel(winnerLabel, 30, true);
-                    winnerLabel.setTextFill(Color.WHITE);
-                }
+                checkEstado();
+
             }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
 
@@ -125,6 +115,21 @@ public class TableroController implements Initializable {
                 Button boton = (Button) nodo;
                 boton.setDisable(true);
             }
+        }
+    }
+
+    private void checkEstado() {
+        if (board.HayGanador(currentPlayer)) {
+            desactivarBotones();
+            winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
+            winnerLabel.setAlignment(Pos.CENTER);
+            Utility.styleLabel(winnerLabel, 30, true);
+            winnerLabel.setTextFill(Color.WHITE);
+        } else if (board.isFull() && !board.HayGanador(currentPlayer)) {
+            winnerLabel.setText("EMPATE");
+            winnerLabel.setAlignment(Pos.CENTER);
+            Utility.styleLabel(winnerLabel, 30, true);
+            winnerLabel.setTextFill(Color.WHITE);
         }
     }
 
