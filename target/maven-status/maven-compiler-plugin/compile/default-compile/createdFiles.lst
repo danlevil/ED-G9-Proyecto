@@ -1,4 +1,8 @@
-g9/PrimaryController.class
+ec\edu\espol\tictactoegrupo_09\TableroController.class
 module-info.class
-g9/App.class
-g9/SecondaryController.class
+ec\edu\espol\tictactoegrupo_09\MenuController.class
+Estructuras\Tree.class
+ec\edu\espol\tictactoegrupo_09\App.class
+Estructuras\TreeNode.class
+Modelo\Board.class
+Modelo\Utility.class
