@@ -7,6 +7,7 @@ package ec.edu.espol.tictactoegrupo_09;
 import Modelo.Utility;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -46,6 +49,8 @@ public class MenuController implements Initializable {
     private String gameMode;
     private char symbolPlayer1;
     private char initialSymbol;
+    @FXML
+    private ImageView menu;
 
     /**
      * Initializes the controller class.
@@ -67,12 +72,13 @@ public class MenuController implements Initializable {
 
     }
 
+  
+    
     @FXML
-    private void modo1(ActionEvent event) {
+    private void modo1(ActionEvent event) throws IOException {
         gameMode = "JugadorVsComputadora";
-        chooseSymbol();
-        initialPlayer();
-        openGameWindow();
+        abrirVentanaDificultad();
+        
     }
 
     @FXML
@@ -84,9 +90,9 @@ public class MenuController implements Initializable {
     @FXML
     private void modo3(ActionEvent event) {
         gameMode = "JugadorVsJugador";
-        chooseSymbol();
-        initialPlayer();
+        if (initialPlayer() && chooseSymbol()) {
         openGameWindow();
+    }
     }
 
     private void openGameWindow() {
@@ -113,8 +119,13 @@ public class MenuController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    private void abrirVentanaDificultad() throws IOException{
+        App.setRoot("ElegirDificultad");
+   
+    }
 
-    private void chooseSymbol() {
+    private boolean chooseSymbol() {
         ButtonType buttonTypeX = new ButtonType("X");
         ButtonType buttonTypeO = new ButtonType("O");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -126,20 +137,45 @@ public class MenuController implements Initializable {
         ButtonType buttonType = alert.getResult();
         symbolPlayer1 = buttonType.getText().charAt(0);
         System.out.println(symbolPlayer1);
+        return true;
     }
 
-    private void initialPlayer() {
-        ButtonType buttonTypeX = new ButtonType("X");
-        ButtonType buttonTypeO = new ButtonType("O");
+    private boolean initialPlayer() {
+//        ButtonType buttonTypeX = new ButtonType("X");
+//        ButtonType buttonTypeO = new ButtonType("O");
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Selecciona Turno");
+//        alert.setHeaderText("¿Qué símbolo quieres que empiece el juego?");
+//        alert.getButtonTypes().clear();
+//        alert.getButtonTypes().addAll(buttonTypeX, buttonTypeO);
+//         Optional<ButtonType> resultado = alert.showAndWait();
+//        alert.showAndWait();
+//        ButtonType buttonType = alert.getResult();
+//        initialSymbol = buttonType.getText().charAt(0);
+//        System.out.println(initialSymbol);
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona Turno");
         alert.setHeaderText("¿Qué símbolo quieres que empiece el juego?");
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(buttonTypeX, buttonTypeO);
-        alert.showAndWait();
-        ButtonType buttonType = alert.getResult();
-        initialSymbol = buttonType.getText().charAt(0);
-        System.out.println(initialSymbol);
+        ButtonType buttonTypeX = new ButtonType("X");
+        ButtonType buttonTypeO = new ButtonType("O");
+        alert.getButtonTypes().setAll(buttonTypeX, buttonTypeO);
+        Optional<ButtonType> resultado = alert.showAndWait();
+        if(resultado.isPresent()){
+          initialSymbol = resultado.get().getText().charAt(0);
+          System.out.println(initialSymbol);  
+          return true;
+        }else{
+          
+        }
+        return false;
+    }
+
+    @FXML
+    private void abrirMenuDeOpciones(MouseEvent event) {
+        
+        
+        
     }
 
 }
