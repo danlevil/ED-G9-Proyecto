@@ -45,11 +45,13 @@ public class TableroController implements Initializable {
     private String gameMode;
     private char initialSymbol; //No asignado
     private char currentPlayer;
+    private String initialPlayer;
     @FXML
     private Label winnerLabel;
     @FXML
     private ImageView imgVolver;
     List<Node> casillasDisponibles;
+    
 
     /**
      * Initializes the controller class.
@@ -88,7 +90,10 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
-
+            if(initialPlayer.equals("Computadora")){
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoComputadora();
+            }
         } else if (gameMode.equals("JugadorVsJugador")) {
             currentPlayer = initialSymbol;
         }
@@ -97,6 +102,11 @@ public class TableroController implements Initializable {
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
+    
+    public void setInitialPlayer(String intialPlayer){
+        this.initialPlayer = intialPlayer;
+    }
+    
 
     public void setinitialSymbol(char symbol) {
         this.initialSymbol = symbol;
@@ -124,6 +134,7 @@ public class TableroController implements Initializable {
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
+            
             int i = GridPane.getRowIndex(boton);
             int j = GridPane.getColumnIndex(boton);
             if (juego.getCells()[i][j] == ' ') {

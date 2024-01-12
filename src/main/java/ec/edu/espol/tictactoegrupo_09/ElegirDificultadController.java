@@ -38,7 +38,8 @@ public class ElegirDificultadController implements Initializable {
     private String gameMode;
     private char symbolPlayer1;
     private char initialSymbol;
-    
+    private String initialPlayer;
+
 
     /**
      * Initializes the controller class.
@@ -52,6 +53,7 @@ public class ElegirDificultadController implements Initializable {
     @FXML
     private void empezarJuegoFacil(ActionEvent event) {
         chooseSymbol();
+        choosePlayer();
         try {
             gameMode = "JugadorVsComputadora";
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
@@ -61,6 +63,7 @@ public class ElegirDificultadController implements Initializable {
             tableroController.setSymbolPlayer1(symbolPlayer1);
             tableroController.setGameMode(gameMode);
             tableroController.setinitialSymbol(symbolPlayer1);
+            tableroController.setInitialPlayer(initialPlayer);
             tableroController.newGame();
             
             Scene scene = new Scene(root);
@@ -99,6 +102,21 @@ public class ElegirDificultadController implements Initializable {
         symbolPlayer1 = buttonType.getText().charAt(0);
         System.out.println(symbolPlayer1);
     }
+    
+    private void choosePlayer() {
+        ButtonType buttonTypeX = new ButtonType("Persona");
+        ButtonType buttonTypeO = new ButtonType("Computadora");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Selecciona quién inicia el juego");
+        alert.setHeaderText("¿Quién inicia el juego?");
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(buttonTypeX, buttonTypeO);
+        alert.showAndWait();
+        ButtonType buttonType = alert.getResult();
+        initialPlayer = buttonType.getText();
+        System.out.println(initialPlayer);
+    }
+
 
 
     @FXML
