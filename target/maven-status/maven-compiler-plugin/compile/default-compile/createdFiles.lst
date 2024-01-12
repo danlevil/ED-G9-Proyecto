@@ -1,8 +1,8 @@
-ec\edu\espol\tictactoegrupo_09\TableroController.class
+Modelo/Utility.class
 module-info.class
-ec\edu\espol\tictactoegrupo_09\MenuController.class
-Estructuras\Tree.class
-ec\edu\espol\tictactoegrupo_09\App.class
-Estructuras\TreeNode.class
-Modelo\Board.class
-Modelo\Utility.class
+Estructuras/Tree.class
+ec/edu/espol/tictactoegrupo_09/App.class
+Estructuras/TreeNode.class
+ec/edu/espol/tictactoegrupo_09/TableroController.class
+ec/edu/espol/tictactoegrupo_09/MenuController.class
+Modelo/Board.class
