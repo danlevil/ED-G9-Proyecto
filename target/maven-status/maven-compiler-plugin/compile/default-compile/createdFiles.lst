@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Modelo/Utility.class
 module-info.class
 Estructuras/Tree.class
@@ -6,3 +7,15 @@ Estructuras/TreeNode.class
 ec/edu/espol/tictactoegrupo_09/TableroController.class
 ec/edu/espol/tictactoegrupo_09/MenuController.class
 Modelo/Board.class
+=======
+ec\edu\espol\tictactoegrupo_09\TableroController.class
+Estructuras\Tree.class
+Modelo\gameFileManager.class
+Modelo\Utility.class
+Modelo\TicTacToe.class
+module-info.class
+ec\edu\espol\tictactoegrupo_09\MenuController.class
+ec\edu\espol\tictactoegrupo_09\App.class
+ec\edu\espol\tictactoegrupo_09\ElegirDificultadController.class
+Estructuras\TreeNode.class
+>>>>>>> 372fdd47e742fe291957d8c6e20efc37b7146db4

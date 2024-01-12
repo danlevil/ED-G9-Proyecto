@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.tictactoegrupo_09.ElegirDificultadController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="900.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="900.0">
+               <children>
+                  <ImageView fx:id="imgVolver" fitHeight="55.0" fitWidth="64.0" onMouseClicked="#volverMenu" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../images/Volver.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label alignment="TOP_LEFT" prefHeight="35.0" prefWidth="826.0" text="                    Seleccione dificultad" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="194.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="btFacil" mnemonicParsing="false" onAction="#empezarJuegoFacil" prefHeight="63.0" prefWidth="154.0" text="Fácil">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="161.0" prefWidth="900.0">
+         <children>
+            <Button fx:id="btDificil" mnemonicParsing="false" onAction="#empezarJuegoDificil" prefHeight="63.0" prefWidth="154.0" text="Difícil">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</VBox>

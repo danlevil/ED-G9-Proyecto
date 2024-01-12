@@ -4,16 +4,19 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author johan
  */
-public class Board {
-
+public class TicTacToe implements Serializable{
+    private static final long serialVersionUID = 1L;
     private char[][] cells;
     private char symbolPlayer;
+    
 
-    public Board() {
+    public TicTacToe() {
         this.cells = new char[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

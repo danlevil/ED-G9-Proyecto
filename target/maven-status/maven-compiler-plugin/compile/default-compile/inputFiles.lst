@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/ec/edu/espol/tictactoegrupo_09/App.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/Board.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/Utility.java
@@ -6,3 +7,15 @@
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/module-info.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Estructuras/Tree.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Estructuras/TreeNode.java
+=======
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\Modelo\Utility.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\Estructuras\Tree.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\Modelo\gameFileManager.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\ec\edu\espol\tictactoegrupo_09\MenuController.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\ec\edu\espol\tictactoegrupo_09\ElegirDificultadController.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\ec\edu\espol\tictactoegrupo_09\TableroController.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\module-info.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\ec\edu\espol\tictactoegrupo_09\App.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\Estructuras\TreeNode.java
+C:\Users\Charlie\Desktop\ED-G9-Proyecto\src\main\java\Modelo\TicTacToe.java
+>>>>>>> 372fdd47e742fe291957d8c6e20efc37b7146db4
