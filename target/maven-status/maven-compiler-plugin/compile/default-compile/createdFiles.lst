@@ -2,9 +2,11 @@ ec\edu\espol\tictactoegrupo_09\TableroController.class
 Estructuras\Tree.class
 Modelo\gameFileManager.class
 Modelo\Utility.class
+Modelo\TicTacToe$1.class
 Modelo\TicTacToe.class
 module-info.class
 ec\edu\espol\tictactoegrupo_09\MenuController.class
 ec\edu\espol\tictactoegrupo_09\App.class
 ec\edu\espol\tictactoegrupo_09\ElegirDificultadController.class
 Estructuras\TreeNode.class
+Modelo\TicTacToe$Linea.class

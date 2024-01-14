@@ -4,7 +4,8 @@
  */
 package ec.edu.espol.tictactoegrupo_09;
 
-
+import Estructuras.Tree;
+import Estructuras.TreeNode;
 import Modelo.TicTacToe;
 import Modelo.Utility;
 import java.io.IOException;
@@ -51,7 +52,6 @@ public class TableroController implements Initializable {
     @FXML
     private ImageView imgVolver;
     List<Node> casillasDisponibles;
-    
 
     /**
      * Initializes the controller class.
@@ -86,13 +86,18 @@ public class TableroController implements Initializable {
         }
 
         if (gameMode.equals("ComputerVsComputer")) {
-            // makeComputerMove();
 
-        } else if (gameMode.equals("JugadorVsComputadora")) {
+        } else if (gameMode.equals("JugadorVsComputadoraFacil")) {
             currentPlayer = initialSymbol;
-            if(initialPlayer.equals("Computadora")){
+            if (initialPlayer.equals("Computadora")) {
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 realizarMovimientoComputadora();
+            }
+        } else if (gameMode.equals("JugadorVsComputadoraDificil")) {
+            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
+               currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoMinimax();
+               // currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             }
         } else if (gameMode.equals("JugadorVsJugador")) {
             currentPlayer = initialSymbol;
@@ -102,11 +107,10 @@ public class TableroController implements Initializable {
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
-    
-    public void setInitialPlayer(String intialPlayer){
+
+    public void setInitialPlayer(String intialPlayer) {
         this.initialPlayer = intialPlayer;
     }
-    
 
     public void setinitialSymbol(char symbol) {
         this.initialSymbol = symbol;
@@ -121,34 +125,28 @@ public class TableroController implements Initializable {
     }
 
     private void clickButton(Button boton) {
+        int i = GridPane.getRowIndex(boton);
+        int j = GridPane.getColumnIndex(boton);
+        if (juego.getCells()[i][j] == ' ') {
+            juego.setSymbol(i, j, currentPlayer);
+            boton.setText(currentPlayer + "");
+            boton.setDisable(true);
+            casillasDisponibles.remove(boton);
+            checkEstado();
+        }
+
         if (gameMode.equals("JugadorVsJugador")) {
-            int i = GridPane.getRowIndex(boton);
-            int j = GridPane.getColumnIndex(boton);
-            if (juego.getCells()[i][j] == ' ') {
-                juego.setSymbol(i, j, currentPlayer);
-                boton.setText(currentPlayer + "");
-                boton.setDisable(true);
-                checkEstado();
-
-            }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
-
-        } else if (gameMode.equals("JugadorVsComputadora")) {
-            
-            int i = GridPane.getRowIndex(boton);
-            int j = GridPane.getColumnIndex(boton);
-            if (juego.getCells()[i][j] == ' ') {
-                juego.setSymbol(i, j, currentPlayer);
-                boton.setText(currentPlayer + "");
-                boton.setDisable(true);
-                casillasDisponibles.remove(boton);
-                System.out.println(casillasDisponibles);
-                checkEstado();
-
+        } else if (gameMode.equals("JugadorVsComputadoraFacil")) {
+            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoComputadora();
             }
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-            realizarMovimientoComputadora();
-
+        } else if (gameMode.equals("JugadorVsComputadoraDificil")) {
+            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
+                realizarMovimientoMinimax();
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            }
         }
     }
 
@@ -188,6 +186,89 @@ public class TableroController implements Initializable {
         }
     }
 
+//    private void realizarMovimientoMinimax() {
+//        if (!casillasDisponibles.isEmpty()) {
+//            // Crea un nuevo nodo de árbol con el estado actual del juego
+//            TreeNode<TicTacToe> node = new TreeNode<>(juego);
+//
+//            // Llama al método Minimax para encontrar el mejor movimiento
+//            juego.minimax(node, 2, true); // Asume una profundidad de 3
+//
+//            // Encuentra el mejor movimiento entre los hijos del nodo
+//            TreeNode<TicTacToe> bestMove = null;
+//            for (Tree<TicTacToe> child : node.getChildren()) {
+//                if (bestMove == null || child.getRootNode().getUtility() > bestMove.getUtility()) {
+//                    bestMove = child.getRootNode();
+//                }
+//            }
+//
+//            // Actualiza el estado del juego al mejor movimiento
+//            juego = bestMove.getContent();
+//
+//            // Actualiza la interfaz de usuario
+//            for (Node nodo : casillasDisponibles) {
+//                if (nodo instanceof Button) {
+//                    Button boton = (Button) nodo;
+//                    int i = GridPane.getRowIndex(boton);
+//                    int j = GridPane.getColumnIndex(boton);
+//                    if (juego.getCells()[i][j] != ' ') {
+//                        boton.setText(juego.getCells()[i][j] + "");
+//                        boton.setDisable(true);
+//                        casillasDisponibles.remove(boton);
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            //checkEstado();
+//           // currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+//        }
+//    }
+    private void realizarMovimientoMinimax() {
+        if (!casillasDisponibles.isEmpty()) {
+            TreeNode<TicTacToe> node = new TreeNode<>(juego);
+
+            juego.minimax(node, 2, true); // Asume una profundidad de 3
+
+            TreeNode<TicTacToe> bestMove = null;
+            for (Tree<TicTacToe> child : node.getChildren()) {
+                if (bestMove == null || child.getRootNode().getUtility() > bestMove.getUtility()) {
+                    bestMove = child.getRootNode();
+                }
+            }
+
+            // Verifica si bestMove es null antes de usarlo
+            if (bestMove != null) {
+                // Actualiza el estado del juego al mejor movimiento
+                juego = bestMove.getContent();
+
+                // Actualiza la interfaz de usuario
+                for (Node nodo : casillasDisponibles) {
+                    if (nodo instanceof Button) {
+                        Button boton = (Button) nodo;
+                        int i = GridPane.getRowIndex(boton);
+                        int j = GridPane.getColumnIndex(boton);
+                        if (juego.getCells()[i][j] != ' ') {
+                            boton.setText(juego.getCells()[i][j] + "");
+                            boton.setDisable(true);
+                            casillasDisponibles.remove(boton);
+                            break;
+                        }
+                    }
+                }
+
+                // Después de actualizar el estado del juego y la interfaz de usuario, verifica el estado del juego
+                checkEstado();
+            } else {
+                // Maneja el caso en que bestMove es null
+                // Puedes decidir qué hacer en este caso según las necesidades de tu aplicación
+            }
+
+            // Cambia el turno al otro jugador
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        }
+    }
+
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
@@ -205,10 +286,10 @@ public class TableroController implements Initializable {
 
     @FXML
     private void regresarAmenu(MouseEvent event) throws IOException {
-        if(gameMode.equals("JugadorVsComputadora")){
-           
-        }else if(gameMode.equals("JugadorVsJugador")){
-           
+        if (gameMode.equals("JugadorVsComputadora")) {
+
+        } else if (gameMode.equals("JugadorVsJugador")) {
+
         }
     }
 

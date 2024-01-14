@@ -34,12 +34,11 @@ public class ElegirDificultadController implements Initializable {
     private Button btFacil;
     @FXML
     private Button btDificil;
-    
+
     private String gameMode;
     private char symbolPlayer1;
     private char initialSymbol;
     private String initialPlayer;
-
 
     /**
      * Initializes the controller class.
@@ -47,15 +46,14 @@ public class ElegirDificultadController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
+    }
 
     @FXML
     private void empezarJuegoFacil(ActionEvent event) {
         chooseSymbol();
         choosePlayer();
         try {
-            gameMode = "JugadorVsComputadora";
+            gameMode = "JugadorVsComputadoraFacil";
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
             Parent root = fxmlLoader.load();
 
@@ -65,7 +63,7 @@ public class ElegirDificultadController implements Initializable {
             tableroController.setinitialSymbol(symbolPlayer1);
             tableroController.setInitialPlayer(initialPlayer);
             tableroController.newGame();
-            
+
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Tres en Raya");
@@ -78,17 +76,41 @@ public class ElegirDificultadController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
-    
     @FXML
     private void empezarJuegoDificil(ActionEvent event) {
-        
-        
-        
+
+        chooseSymbol();
+        choosePlayer();
+        try {
+            gameMode = "JugadorVsComputadoraDificil";
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
+            Parent root = fxmlLoader.load();
+
+            TableroController tableroController = fxmlLoader.getController();
+            tableroController.setSymbolPlayer1(symbolPlayer1);
+            tableroController.setGameMode(gameMode);
+            tableroController.setinitialSymbol(symbolPlayer1);
+            tableroController.setInitialPlayer(initialPlayer);
+            tableroController.newGame();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Tres en Raya");
+            Image icono = new Image("images/tictactoe.png");
+            stage.getIcons().add(icono);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
-    
+
     private void chooseSymbol() {
         ButtonType buttonTypeX = new ButtonType("X");
         ButtonType buttonTypeO = new ButtonType("O");
@@ -102,7 +124,7 @@ public class ElegirDificultadController implements Initializable {
         symbolPlayer1 = buttonType.getText().charAt(0);
         System.out.println(symbolPlayer1);
     }
-    
+
     private void choosePlayer() {
         ButtonType buttonTypeX = new ButtonType("Persona");
         ButtonType buttonTypeO = new ButtonType("Computadora");
@@ -117,12 +139,10 @@ public class ElegirDificultadController implements Initializable {
         System.out.println(initialPlayer);
     }
 
-
-
     @FXML
     private void volverMenu(MouseEvent event) throws IOException {
         App.setRoot("Menu");
-     
+
     }
-    
+
 }

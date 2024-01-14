@@ -7,6 +7,7 @@ public class TreeNode<E> {
 
     private E content;
     private List<Tree<E>> children;
+    private int utility;
 
     public TreeNode(E content) {
         this.content = content;
@@ -41,6 +42,14 @@ public class TreeNode<E> {
 
     public boolean removeChild(E childContent) {
         return this.children.removeIf(childTree -> childTree.getRoot().equals(childContent));
+    }
+
+    public int getUtility() {
+        return utility;
+    }
+
+    public void setUtility(int utility) {
+        this.utility = utility;
     }
 
 }
