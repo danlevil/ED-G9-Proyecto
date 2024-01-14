@@ -4,7 +4,6 @@
  */
 package ec.edu.espol.tictactoegrupo_09;
 
-
 import Modelo.TicTacToe;
 import Modelo.Utility;
 import java.io.IOException;
@@ -51,7 +50,6 @@ public class TableroController implements Initializable {
     @FXML
     private ImageView imgVolver;
     List<Node> casillasDisponibles;
-    
 
     /**
      * Initializes the controller class.
@@ -90,7 +88,7 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
-            if(initialPlayer.equals("Computadora")){
+            if (initialPlayer.equals("Computadora")) {
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 realizarMovimientoComputadora();
             }
@@ -102,11 +100,10 @@ public class TableroController implements Initializable {
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
-    
-    public void setInitialPlayer(String intialPlayer){
+
+    public void setInitialPlayer(String intialPlayer) {
         this.initialPlayer = intialPlayer;
     }
-    
 
     public void setinitialSymbol(char symbol) {
         this.initialSymbol = symbol;
@@ -134,7 +131,7 @@ public class TableroController implements Initializable {
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
-            
+
             int i = GridPane.getRowIndex(boton);
             int j = GridPane.getColumnIndex(boton);
             if (juego.getCells()[i][j] == ' ') {
@@ -184,13 +181,21 @@ public class TableroController implements Initializable {
             if (nodo instanceof Button) {
                 Button boton = (Button) nodo;
                 boton.setDisable(true);
+                
             }
         }
     }
 
+    private void resaltarGanador(){
+        
+        
+    
+    }
+    
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
+            resaltarGanador();
             winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
             winnerLabel.setAlignment(Pos.CENTER);
             Utility.styleLabel(winnerLabel, 30, true);
@@ -205,10 +210,10 @@ public class TableroController implements Initializable {
 
     @FXML
     private void regresarAmenu(MouseEvent event) throws IOException {
-        if(gameMode.equals("JugadorVsComputadora")){
-           
-        }else if(gameMode.equals("JugadorVsJugador")){
-           
+        if (gameMode.equals("JugadorVsComputadora")) {
+
+        } else if (gameMode.equals("JugadorVsJugador")) {
+
         }
     }
 
