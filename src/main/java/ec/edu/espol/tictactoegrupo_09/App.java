@@ -53,6 +53,8 @@ public class App extends Application {
         miTablero.imprimirElementos();
         System.out.println("primera modificacion");
         miTablero.modificarValor("00", urlOfire);
+        miTablero.modificarValor("01", String.valueOf("x"));
+        miTablero.modificarValor("02", String.valueOf("xx"));
         /*
         miTablero.modificarValor("02", String.valueOf('X'));
         miTablero.imprimirElementos();
@@ -69,8 +71,11 @@ public class App extends Application {
         miTablero2.imprimirElementos();*/
         System.out.println("Imprimir posibilidades");
         //System.out.println(miTablero.generadorProbabilidades(urlOfire));
+        int n=1;
         for(TableroC<String> t: miTablero.generadorProbabilidades(urlOfire)){
+            System.out.println("iteracion n: "+n);
             t.imprimirElementos();
+            n++;
         }
     }
 

@@ -21,7 +21,7 @@ public class TableroC<V>{
     public TableroC() {
         this.tablero=new HashMap<>();
         inicializarPredefinido(this.tablero);
-        this.disponibles=this.tablero;
+        this.disponibles=new HashMap<>(this.tablero);
     }
     
     private void inicializarPredefinido(Map<String,V> tablero){
@@ -62,13 +62,12 @@ public class TableroC<V>{
     }
     public  List<TableroC<V>> generadorProbabilidades(V current){
         List<String> listaDeClaves = new ArrayList<>(disponibles.keySet());
-        //System.out.println(listaDeClaves);
         List<TableroC<V>>posibilidades = new ArrayList<>();
         System.out.println(listaDeClaves);
         System.out.println(this);
-        TableroC<V> copyBoard= this;
-        System.out.println(copyBoard);
         for(int i=0;i<listaDeClaves.size();i++){
+            TableroC<V> copyBoard= new TableroC<V>();
+            copyBoard.tablero=new HashMap<>(this.tablero);
             copyBoard.modificarValorProbable(listaDeClaves.get(i), current);
             posibilidades.add(copyBoard);
             
