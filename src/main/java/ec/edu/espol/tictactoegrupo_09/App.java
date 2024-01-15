@@ -1,6 +1,8 @@
 package ec.edu.espol.tictactoegrupo_09;
 
 import Modelo.Bloque;
+import Modelo.CalculadoraDeUtilidad;
+import Modelo.GeneradorProbabilidad;
 import Modelo.TableroC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -52,10 +54,30 @@ public class App extends Application {
         TableroC<String> miTablero= new TableroC<>();
         miTablero.imprimirElementos();
         System.out.println("primera modificacion");
-        miTablero.modificarValor("00", urlOfire);
-        miTablero.modificarValor("01", String.valueOf("x"));
-        miTablero.modificarValor("02", String.valueOf("xx"));
-        /*
+        miTablero.modificarValor("11", String.valueOf('X'));
+        //miTablero.modificarValor("01", String.valueOf("x"));
+        //miTablero.modificarValor("02", String.valueOf("xx"));
+        
+        System.out.println("Imprimir posibilidades");
+        //System.out.println(miTablero.generadorProbabilidades(urlOfire));
+        int n=1;
+        GeneradorProbabilidad g1= new GeneradorProbabilidad();
+        CalculadoraDeUtilidad c1= new CalculadoraDeUtilidad();
+        //miTablero.generadorProbabilidades("Probabilidad 1")
+        System.out.println(g1.generarProbablesTablero(miTablero,'O').size());
+        for(TableroC<String> t: g1.generarProbablesTablero(miTablero,'O')){
+            System.out.println("iteracion n: "+n);
+            c1.calcularUtilidad(t, 'O');
+            t.imprimirElementos();
+            System.out.println("utilidad : "+t.getUtilidad());
+            n++;
+        }
+    }
+
+}
+
+
+/*
         miTablero.modificarValor("02", String.valueOf('X'));
         miTablero.imprimirElementos();
         System.out.println(miTablero.obtenerElemento("00"));
@@ -69,14 +91,3 @@ public class App extends Application {
         System.out.println(miTablero2.obtenerElemento("02"));
         System.out.println("");
         miTablero2.imprimirElementos();*/
-        System.out.println("Imprimir posibilidades");
-        //System.out.println(miTablero.generadorProbabilidades(urlOfire));
-        int n=1;
-        for(TableroC<String> t: miTablero.generadorProbabilidades(urlOfire)){
-            System.out.println("iteracion n: "+n);
-            t.imprimirElementos();
-            n++;
-        }
-    }
-
-}

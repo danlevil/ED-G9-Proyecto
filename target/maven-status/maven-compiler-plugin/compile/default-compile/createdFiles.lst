@@ -1,6 +1,8 @@
 Modelo/Utility.class
+Modelo/CalculadoraDeUtilidad.class
 Estructuras/TreeNode.class
 module-info.class
+Modelo/GeneradorProbabilidad.class
 ec/edu/espol/tictactoegrupo_09/App.class
 Modelo/gameFileManager.class
 ec/edu/espol/tictactoegrupo_09/dificilController.class

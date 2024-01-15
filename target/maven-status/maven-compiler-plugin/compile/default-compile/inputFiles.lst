@@ -3,8 +3,10 @@
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/ec/edu/espol/tictactoegrupo_09/MenuController.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/ec/edu/espol/tictactoegrupo_09/TableroController.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/gameFileManager.java
+/home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/GeneradorProbabilidad.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/TableroC.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/TicTacToe.java
+/home/danlevil/Escritorio/TresEnRaya/src/main/java/Modelo/CalculadoraDeUtilidad.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/module-info.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/Estructuras/Tree.java
 /home/danlevil/Escritorio/TresEnRaya/src/main/java/ec/edu/espol/tictactoegrupo_09/ElegirDificultadController.java

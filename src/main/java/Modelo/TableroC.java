@@ -5,7 +5,7 @@
 package Modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +15,14 @@ import java.util.Map;
  */
 public class TableroC<V>{
     
-    private HashMap<String,V> tablero;
-    private HashMap<String,V> disponibles;
+    private LinkedHashMap<String,V> tablero;
+    private LinkedHashMap<String,V> disponibles;
+    private int utilidad;
 
     public TableroC() {
-        this.tablero=new HashMap<>();
+        this.tablero=new LinkedHashMap<>();
         inicializarPredefinido(this.tablero);
-        this.disponibles=new HashMap<>(this.tablero);
+        this.disponibles=new LinkedHashMap<>(this.tablero);
     }
     
     private void inicializarPredefinido(Map<String,V> tablero){
@@ -35,6 +36,33 @@ public class TableroC<V>{
         tablero.put((String) "21", (V) null);
         tablero.put((String) "22", (V) null);
     }
+    //GETTERS Y SETTERS
+    public LinkedHashMap<String, V> getDisponibles() {
+        return disponibles;
+    }
+
+    public LinkedHashMap<String, V> getTablero() {
+        return tablero;
+    }
+
+    public void setTablero(LinkedHashMap<String, V> tablero) {
+        this.tablero = tablero;
+    }
+
+    public void setDisponibles(LinkedHashMap<String, V> disponibles) {
+        this.disponibles = disponibles;
+    }
+
+    public void setUtilidad(int utilidad) {
+        this.utilidad = utilidad;
+    }
+
+    public int getUtilidad() {
+        return utilidad;
+    }
+    
+    
+    //METODOS DEL MAP
     public V obtenerElemento(String clave) {
         return tablero.get(clave);
     }
@@ -49,17 +77,29 @@ public class TableroC<V>{
             disponibles.remove(clave);
             System.out.println(disponibles.keySet());
         } else {
-            throw new IllegalArgumentException("La clave no existe en el HashMap");
+            throw new IllegalArgumentException("La clave no existe en el LinkedHashMap");
         }
     }
     public void modificarValorProbable(String clave, V nuevoValor) {
         if (tablero.containsKey(clave)) {
             tablero.put(clave, nuevoValor);
-            
         } else {
-            throw new IllegalArgumentException("La clave no existe en el HashMap");
+            throw new IllegalArgumentException("La clave no existe en el LinkedHashMap");
         }
     }
+    
+    //METODOS TABLERO
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     public  List<TableroC<V>> generadorProbabilidades(V current){
         List<String> listaDeClaves = new ArrayList<>(disponibles.keySet());
         List<TableroC<V>>posibilidades = new ArrayList<>();
@@ -67,13 +107,11 @@ public class TableroC<V>{
         System.out.println(this);
         for(int i=0;i<listaDeClaves.size();i++){
             TableroC<V> copyBoard= new TableroC<V>();
-            copyBoard.tablero=new HashMap<>(this.tablero);
+            copyBoard.tablero=new LinkedHashMap<>(this.tablero);
             copyBoard.modificarValorProbable(listaDeClaves.get(i), current);
             posibilidades.add(copyBoard);
-            
         }
         return posibilidades;
-
-        
     }
+    */
 }
