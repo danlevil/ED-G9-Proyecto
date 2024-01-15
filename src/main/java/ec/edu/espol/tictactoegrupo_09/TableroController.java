@@ -173,7 +173,7 @@ public class TableroController implements Initializable {
                     checkEstado();
 
                 }
-               
+
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 realizarMovimientoComputadoraDificil();
 
@@ -219,37 +219,33 @@ public class TableroController implements Initializable {
         }
     }
 
-    private void resaltarGanador() {
-
-    }
-
     public void realizarMovimientoComputadoraDificil() {
         if (symbolPlayer1 == 'X') {
-            
+
             if (initialPlayer.equals("Computadora")) {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
                 mover(move);
 
-            }else{
+            } else {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
                 mover(move);
-            
+
             }
 
         } else {
             if (initialPlayer.equals("Computadora")) {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-                 mover(move);
-            }else{
+                mover(move);
+            } else {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-                 mover(move);
+                mover(move);
             }
-            
+
         }
 
     }
-    
-    private void mover(int[] move){
+
+    private void mover(int[] move) {
         juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
 
         // Encuentra el botón correspondiente al movimiento en el GridPane
@@ -276,8 +272,9 @@ public class TableroController implements Initializable {
 
         checkEstado();
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-        
+
     }
+
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
@@ -300,6 +297,41 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsJugador")) {
 
+        }
+    }
+
+    private void resaltarGanador() {
+        char[][] tablero = juego.getCells();
+        for (int i = 0; i < 3; i++) {
+            if (checkLine(tablero, i, 0, i, 1, i, 2) || checkLine(tablero, 0, i, 1, i, 2, i)) {
+                return;
+            }
+        }
+        if (checkLine(tablero, 0, 0, 1, 1, 2, 2) || checkLine(tablero, 0, 2, 1, 1, 2, 0)) {
+            return;
+        }
+    }
+
+    private boolean checkLine(char[][] tablero, int row1, int col1, int row2, int col2, int row3, int col3) {
+        if (tablero[row1][col1] != '\0' && tablero[row1][col1] == tablero[row2][col2] && tablero[row2][col2] == tablero[row3][col3]) {
+            highlightButtons(row1, col1, row2, col2, row3, col3);
+            return true;
+        }
+        return false;
+    }
+
+    private void highlightButtons(int row1, int col1, int row2, int col2, int row3, int col3) {
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof Button) {
+                Button button = (Button) node;
+                button.setDisable(false);
+                button.setOnAction(event -> {});
+                int row = GridPane.getRowIndex(button);
+                int col = GridPane.getColumnIndex(button);
+                if ((row == row1 && col == col1) || (row == row2 && col == col2) || (row == row3 && col == col3)) {
+                    button.setStyle("-fx-background-color: red;");
+                }
+            }
         }
     }
 
