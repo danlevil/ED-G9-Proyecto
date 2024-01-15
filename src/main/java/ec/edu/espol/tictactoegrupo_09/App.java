@@ -55,15 +55,12 @@ public class App extends Application {
         miTablero.imprimirElementos();
         System.out.println("primera modificacion");
         miTablero.modificarValor("11", String.valueOf('X'));
-        //miTablero.modificarValor("01", String.valueOf("x"));
-        //miTablero.modificarValor("02", String.valueOf("xx"));
         
         System.out.println("Imprimir posibilidades");
-        //System.out.println(miTablero.generadorProbabilidades(urlOfire));
+        
         int n=1;
         GeneradorProbabilidad g1= new GeneradorProbabilidad();
         CalculadoraDeUtilidad c1= new CalculadoraDeUtilidad();
-        //miTablero.generadorProbabilidades("Probabilidad 1")
         System.out.println(g1.generarProbablesTablero(miTablero,'O').size());
         for(TableroC<String> t: g1.generarProbablesTablero(miTablero,'O')){
             System.out.println("iteracion n: "+n);
@@ -75,6 +72,9 @@ public class App extends Application {
     }
 
 }
+
+
+
 
 
 /*

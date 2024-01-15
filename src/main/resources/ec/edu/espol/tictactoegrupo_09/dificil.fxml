@@ -14,16 +14,16 @@
       </ImageView>
       <ImageView fitHeight="95.0" fitWidth="128.0" layoutX="104.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="95.0" fitWidth="128.0" layoutX="114.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im6" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im5" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im3" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im9" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im8" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im7" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im6" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="153.0" onMouseClicked="#changeIM6" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im5" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="153.0" onMouseClicked="#changeIM5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im3" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="40.0" onMouseClicked="#changeIM3" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im9" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="262.0" onMouseClicked="#changeIM9" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im8" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="262.0" onMouseClicked="#changeIM8" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im7" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="262.0" onMouseClicked="#changeIM7" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="95.0" fitWidth="94.0" layoutX="14.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im4" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im1" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="im2" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im4" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="153.0" onMouseClicked="#changeIM4" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im1" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="40.0" onMouseClicked="#changeIM1" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im2" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="40.0" onMouseClicked="#changeIM2" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="volver" fitHeight="62.0" fitWidth="63.0" layoutX="7.0" layoutY="9.0" onMouseClicked="#volverMenu" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../images/Volver.png" />

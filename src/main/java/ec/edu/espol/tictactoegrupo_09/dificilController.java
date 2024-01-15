@@ -76,7 +76,6 @@ public class dificilController implements Initializable {
         }
     }
     
-    @FXML
     private void changeImageView(MouseEvent event) {
         ImageView clickedImageView = (ImageView) event.getSource();
         
@@ -95,4 +94,44 @@ public class dificilController implements Initializable {
     private void changeCurrentSymbol(){
         currentSymbol=(this.currentSymbol.equals(App.urlXfire))?App.urlOfire:App.urlXfire;
     }
+
+    
+    
+
+
+    
+    @FXML
+    private void changeIM1(MouseEvent event) {
+    }
+
+    @FXML
+    private void changeIM2(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM3(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM4(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM5(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM6(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM7(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM8(MouseEvent event) {
+    }
+    @FXML
+    private void changeIM9(MouseEvent event) {
+    }
+
+
+    
+    
+    
+    
 }
