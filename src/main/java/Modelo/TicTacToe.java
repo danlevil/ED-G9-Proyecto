@@ -94,6 +94,20 @@ public class TicTacToe implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("  0 1 2\n"); // Encabezados de columna
+        for (int i = 0; i < cells.length; i++) {
+            sb.append(i); // Número de fila
+            for (int j = 0; j < cells[i].length; j++) {
+                sb.append(" ").append(cells[i][j]);
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     //---------------------------------------------------------------//
     public boolean isFull() {
         for (int i = 0; i < 3; i++) {
@@ -180,55 +194,57 @@ public class TicTacToe implements Serializable {
         return count;
     }
 
-    public void minimax(TreeNode<TicTacToe> node, int depth, boolean isMaximizingPlayer) {
-        TicTacToe board = node.getContent();
-        char winner = checkWinner();
-        if (depth == 0 || winner != '\0') {
-            node.setUtility(score(winner));
-            return;
-        }
+        public void minimax(TreeNode<TicTacToe> node, int depth, boolean isMaximizingPlayer, char maximizer) {
+            TicTacToe board = node.getContent();
+            char winner = board.checkWinner(); 
+            if (depth == 0 || winner != '\0') {
+                node.setUtility(board.score(winner, maximizer)); 
+                return;
+            }
 
-        if (isMaximizingPlayer) {
-            int maxEval = Integer.MIN_VALUE;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (board.getCells()[i][j] == ' ') {
-                        board.setSymbol(i, j, 'O');
-                        TicTacToe childBoard = new TicTacToe(); // Crea una nueva instancia de TicTacToe
-                        childBoard.setCells(board.getCells()); // Copia el estado del tablero
-                        TreeNode<TicTacToe> childNode = new TreeNode<>(childBoard);
-                        node.getChildren().add(new Tree<>(childNode));
-                        minimax(childNode, depth - 1, false);
-                        board.setSymbol(i, j, ' '); // Deshace el movimiento
-                        maxEval = Math.max(maxEval, childNode.getUtility());
+            if (isMaximizingPlayer) {
+                int maxEval = Integer.MIN_VALUE;
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board.getCells()[i][j] == ' ') {
+                            board.setSymbol(i, j, maximizer); // Usa el símbolo del maximizador
+                            TicTacToe childBoard = new TicTacToe();
+                            childBoard.setCells(board.getCells()); // Clona el estado del tablero
+                            TreeNode<TicTacToe> childNode = new TreeNode<>(childBoard);
+                            node.getChildren().add(new Tree<>(childNode));
+                            minimax(childNode, depth - 1, false, maximizer);
+                            board.setSymbol(i, j, ' '); // Deshace el movimiento
+                            maxEval = Math.max(maxEval, childNode.getUtility());
+                            System.out.println(maxEval);
+                        }
                     }
                 }
-            }
-            node.setUtility(maxEval);
-        } else {
-            int minEval = Integer.MAX_VALUE;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (board.getCells()[i][j] == ' ') {
-                        board.setSymbol(i, j, 'X');
-                        TicTacToe childBoard = new TicTacToe(); // Crea una nueva instancia de TicTacToe
-                        childBoard.setCells(board.getCells()); // Copia el estado del tablero
-                        TreeNode<TicTacToe> childNode = new TreeNode<>(childBoard);
-                        node.getChildren().add(new Tree<>(childNode));
-                        minimax(childNode, depth - 1, true);
-                        board.setSymbol(i, j, ' '); // Deshace el movimiento
-                        minEval = Math.min(minEval, childNode.getUtility());
+                node.setUtility(maxEval);
+            } else {
+                char minimizer = (maximizer == 'X') ? 'O' : 'X'; // Determina el símbolo del minimizador
+                int minEval = Integer.MAX_VALUE;
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (board.getCells()[i][j] == ' ') {
+                            board.setSymbol(i, j, minimizer); // Usa el símbolo del minimizador
+                            TicTacToe childBoard = new TicTacToe();
+                            childBoard.setCells(board.getCells()); // Clona el estado del tablero
+                            TreeNode<TicTacToe> childNode = new TreeNode<>(childBoard);
+                            node.getChildren().add(new Tree<>(childNode));
+                            minimax(childNode, depth - 1, true, maximizer);
+                            board.setSymbol(i, j, ' '); // Deshace el movimiento
+                            minEval = Math.min(minEval, childNode.getUtility());
+                        }
                     }
                 }
+                node.setUtility(minEval);
             }
-            node.setUtility(minEval);
         }
-    }
 
-    public int score(char winner) {
-        if (winner == 'O') { // Asume que 'X' es el jugador maximizador
+    public int score(char winner, char maximizer) {
+        if (winner == maximizer) { // Si el ganador es el jugador maximizador
             return 10;
-        } else if (winner == 'X') { // Asume que 'O' es el jugador minimizador
+        } else if (winner != '\0') { // Si hay un ganador y no es el maximizador
             return -10;
         } else {
             return 0; // Devuelve 0 si no hay ganador

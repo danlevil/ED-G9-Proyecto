@@ -88,16 +88,24 @@ public class TableroController implements Initializable {
         if (gameMode.equals("ComputerVsComputer")) {
 
         } else if (gameMode.equals("JugadorVsComputadoraFacil")) {
-            currentPlayer = initialSymbol;
             if (initialPlayer.equals("Computadora")) {
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                currentPlayer = initialSymbol;
                 realizarMovimientoComputadora();
+            } else {
+                currentPlayer = initialSymbol;
             }
+
         } else if (gameMode.equals("JugadorVsComputadoraDificil")) {
-            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
-               currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                realizarMovimientoMinimax();
-               // currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            if (initialPlayer.equals("Computadora")) {
+                currentPlayer = (symbolPlayer1 == 'X') ? 'O' : 'X';
+                realizarMovimientoMinimax(currentPlayer);
+                System.out.println(currentPlayer + "CIRCULO");
+                System.out.println(initialSymbol + "EQUIS");
+            } else {
+                currentPlayer = initialSymbol;
+
+                char computadora = (initialSymbol == 'X') ? 'O' : 'X';
+                realizarMovimientoMinimax(computadora);
             }
         } else if (gameMode.equals("JugadorVsJugador")) {
             currentPlayer = initialSymbol;
@@ -125,27 +133,46 @@ public class TableroController implements Initializable {
     }
 
     private void clickButton(Button boton) {
-        int i = GridPane.getRowIndex(boton);
-        int j = GridPane.getColumnIndex(boton);
-        if (juego.getCells()[i][j] == ' ') {
-            juego.setSymbol(i, j, currentPlayer);
-            boton.setText(currentPlayer + "");
-            boton.setDisable(true);
-            casillasDisponibles.remove(boton);
-            checkEstado();
-        }
-
         if (gameMode.equals("JugadorVsJugador")) {
+            int i = GridPane.getRowIndex(boton);
+            int j = GridPane.getColumnIndex(boton);
+            if (juego.getCells()[i][j] == ' ') {
+                juego.setSymbol(i, j, currentPlayer);
+                boton.setText(currentPlayer + "");
+                boton.setDisable(true);
+                checkEstado();
+
+            }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
         } else if (gameMode.equals("JugadorVsComputadoraFacil")) {
-            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                realizarMovimientoComputadora();
+            int i = GridPane.getRowIndex(boton);
+            int j = GridPane.getColumnIndex(boton);
+            if (juego.getCells()[i][j] == ' ') {
+                juego.setSymbol(i, j, currentPlayer);
+                boton.setText(currentPlayer + "");
+                boton.setDisable(true);
+                casillasDisponibles.remove(boton);
+                System.out.println(casillasDisponibles);
+                checkEstado();
+
             }
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            realizarMovimientoComputadora();
+
         } else if (gameMode.equals("JugadorVsComputadoraDificil")) {
-            if (!juego.HayGanador(currentPlayer) && !juego.isFull()) {
-                realizarMovimientoMinimax();
+            int i = GridPane.getRowIndex(boton);
+            int j = GridPane.getColumnIndex(boton);
+            if (juego.getCells()[i][j] == ' ') {
+                juego.setSymbol(i, j, currentPlayer);
+                boton.setText(currentPlayer + "");
+                boton.setDisable(true);
+                checkEstado();
+
+                // Cambia el turno al otro jugador
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+
+                // Si es el turno de la computadora y la computadora es el jugador inicial, realiza el movimiento Minimax
+                realizarMovimientoMinimax(currentPlayer);
             }
         }
     }
@@ -169,6 +196,29 @@ public class TableroController implements Initializable {
         }
     }
 
+    private void actualizarInterfazUsuarioConMejorMovimiento(TreeNode<TicTacToe> bestMove) {
+        // Obtén el contenido del mejor movimiento
+        TicTacToe juego = bestMove.getContent();
+        char[][] cells = juego.getCells();
+
+        // Recorre todas las casillas y actualiza la interfaz de usuario
+        for (Node nodo : casillasDisponibles) {
+            if (nodo instanceof Button) {
+                Button boton = (Button) nodo;
+                int i = GridPane.getRowIndex(boton);
+                int j = GridPane.getColumnIndex(boton);
+
+                // Si la celda en el mejor movimiento no está vacía y el botón aún no está desactivado
+                if (cells[i][j] != ' ' && !boton.isDisabled()) {
+                    // Actualiza el texto del botón con el símbolo correspondiente
+                    boton.setText(String.valueOf(cells[i][j]));
+                    // Desactiva el botón para evitar más interacciones
+                    boton.setDisable(true);
+                }
+            }
+        }
+    }
+
     private static int obtenerIndiceAleatorio(int tamanoLista) {
         Random random = new Random();
         if (tamanoLista > 0) {
@@ -186,54 +236,20 @@ public class TableroController implements Initializable {
         }
     }
 
-//    private void realizarMovimientoMinimax() {
-//        if (!casillasDisponibles.isEmpty()) {
-//            // Crea un nuevo nodo de árbol con el estado actual del juego
-//            TreeNode<TicTacToe> node = new TreeNode<>(juego);
-//
-//            // Llama al método Minimax para encontrar el mejor movimiento
-//            juego.minimax(node, 2, true); // Asume una profundidad de 3
-//
-//            // Encuentra el mejor movimiento entre los hijos del nodo
-//            TreeNode<TicTacToe> bestMove = null;
-//            for (Tree<TicTacToe> child : node.getChildren()) {
-//                if (bestMove == null || child.getRootNode().getUtility() > bestMove.getUtility()) {
-//                    bestMove = child.getRootNode();
-//                }
-//            }
-//
-//            // Actualiza el estado del juego al mejor movimiento
-//            juego = bestMove.getContent();
-//
-//            // Actualiza la interfaz de usuario
-//            for (Node nodo : casillasDisponibles) {
-//                if (nodo instanceof Button) {
-//                    Button boton = (Button) nodo;
-//                    int i = GridPane.getRowIndex(boton);
-//                    int j = GridPane.getColumnIndex(boton);
-//                    if (juego.getCells()[i][j] != ' ') {
-//                        boton.setText(juego.getCells()[i][j] + "");
-//                        boton.setDisable(true);
-//                        casillasDisponibles.remove(boton);
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            //checkEstado();
-//           // currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-//        }
-//    }
-    private void realizarMovimientoMinimax() {
+    private void realizarMovimientoMinimax(char maximizer) {
         if (!casillasDisponibles.isEmpty()) {
             TreeNode<TicTacToe> node = new TreeNode<>(juego);
 
-            juego.minimax(node, 2, true); // Asume una profundidad de 3
+            juego.minimax(node, 1, true, maximizer);
 
             TreeNode<TicTacToe> bestMove = null;
+            int bestValue = Integer.MIN_VALUE; // Inicializa para maximizar
             for (Tree<TicTacToe> child : node.getChildren()) {
-                if (bestMove == null || child.getRootNode().getUtility() > bestMove.getUtility()) {
+                System.out.println(child.getRoot());
+                int childUtility = child.getRootNode().getUtility();
+                if (childUtility > bestValue) {
                     bestMove = child.getRootNode();
+                    bestValue = childUtility;
                 }
             }
 
@@ -243,25 +259,13 @@ public class TableroController implements Initializable {
                 juego = bestMove.getContent();
 
                 // Actualiza la interfaz de usuario
-                for (Node nodo : casillasDisponibles) {
-                    if (nodo instanceof Button) {
-                        Button boton = (Button) nodo;
-                        int i = GridPane.getRowIndex(boton);
-                        int j = GridPane.getColumnIndex(boton);
-                        if (juego.getCells()[i][j] != ' ') {
-                            boton.setText(juego.getCells()[i][j] + "");
-                            boton.setDisable(true);
-                            casillasDisponibles.remove(boton);
-                            break;
-                        }
-                    }
-                }
+                actualizarInterfazUsuarioConMejorMovimiento(bestMove);
 
                 // Después de actualizar el estado del juego y la interfaz de usuario, verifica el estado del juego
                 checkEstado();
             } else {
                 // Maneja el caso en que bestMove es null
-                // Puedes decidir qué hacer en este caso según las necesidades de tu aplicación
+                System.out.println("No se encontró el mejor movimiento.");
             }
 
             // Cambia el turno al otro jugador

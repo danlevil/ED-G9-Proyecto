@@ -12,6 +12,7 @@ public class TreeNode<E> {
     public TreeNode(E content) {
         this.content = content;
         this.children = new LinkedList<>();
+        this.utility = 0;
     }
 
     public E getContent() {
