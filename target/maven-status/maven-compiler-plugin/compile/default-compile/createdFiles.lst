@@ -2,6 +2,7 @@ ec\edu\espol\tictactoegrupo_09\TableroController.class
 Estructuras\Tree.class
 Modelo\gameFileManager.class
 Modelo\Utility.class
+Modelo\MiniMax.class
 Modelo\TicTacToe.class
 module-info.class
 ec\edu\espol\tictactoegrupo_09\MenuController.class

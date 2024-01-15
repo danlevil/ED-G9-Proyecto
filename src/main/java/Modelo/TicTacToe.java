@@ -5,6 +5,8 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,6 +27,7 @@ public class TicTacToe implements Serializable{
         }
     }
 
+    
     public char[][] getCells() {
         return cells;
     }
@@ -41,10 +44,12 @@ public class TicTacToe implements Serializable{
         this.symbolPlayer = symbolPlayer;
     }
 
-    public void setSymbol(int i, int j, char symbolPlayer) {
-        if (cells[i][j] == ' ') {
-            this.cells[i][j] = symbolPlayer;
-
+    public void setSymbol(char[][] tablero, int x, int y, char symbolPlayer) {
+        if (x >= 0 && x < tablero.length && y >= 0 && y < tablero[x].length) {
+            tablero[x][y] = symbolPlayer;
+        } else {
+            // Manejar el caso en el que x o y están fuera de los límites
+            System.out.println("casillas llenas");
         }
     }
 
@@ -85,17 +90,100 @@ public class TicTacToe implements Serializable{
     }
 
     //---------------------------------------------------------------//
-    public boolean isFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (this.cells[i][j] == ' ') {
-                    return false;
+//    public boolean isFull() {
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                if (this.cells[i][j] == ' ') {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+    
+     public boolean isFull(char[][] board) {
+        return posicionesVacias(board).size() == 0;
+    }
+     
+
+    // posiblemente se puede usar pero en el TebleroController ya se está usando una lista de nodos en este caso los nodos son los nodos del gridpanel
+    static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
+        List<int[]> posicionesVacias = new ArrayList<>();
+        for (int x = 0; x < TableroDeJuego.length; x++) {
+            for (int y = 0; y < TableroDeJuego[x].length; y++) {
+                if (TableroDeJuego[x][y] == ' ') {
+                    posicionesVacias.add(new int[]{x, y});
                 }
             }
         }
-        return true;
+        return posicionesVacias;
+    }
+    
+    
+    
+    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
+        List<int[]> emptyCells = posicionesVacias(cells);
+
+        if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
+            int score = getScore();
+            return new int[]{-1, -1, score};
+        }
+
+        int[] bestMove = new int[]{-1, -1, maximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE};
+
+        for (int[] cell : emptyCells) {
+            int x = cell[0];
+            int y = cell[1];
+
+            if (maximizingPlayer) {
+                cells[x][y] = 'X';
+                int[] currentMove = abminimax(depth - 1, alpha, beta, false);
+                cells[x][y] = ' ';  // Deshacer el movimiento
+
+                if (currentMove[2] > bestMove[2]) {
+                    bestMove[0] = x;
+                    bestMove[1] = y;
+                    bestMove[2] = currentMove[2];
+                }
+
+                alpha = Math.max(alpha, bestMove[2]);
+                if (beta <= alpha) {
+                    break;  // Poda alfa-beta
+                }
+            } else {
+                cells[x][y] = 'O';
+                int[] currentMove = abminimax(depth - 1, alpha, beta, true);
+                cells[x][y] = ' ';  // Deshacer el movimiento
+
+                if (currentMove[2] < bestMove[2]) {
+                    bestMove[0] = x;
+                    bestMove[1] = y;
+                    bestMove[2] = currentMove[2];
+                }
+
+                beta = Math.min(beta, bestMove[2]);
+                if (beta <= alpha) {
+                    break;  // Poda alfa-beta
+                }
+            }
+        }
+
+        return bestMove;
     }
 
+    // Método de ayuda para obtener la puntuación del estado actual del tablero
+    private int getScore() {
+        if (HayGanador('X')) {
+            return 10;
+        } else if (HayGanador('O')) {
+            return -10;
+        } else {
+            return 0;
+        }
+    }
+    
+    
+    
     public boolean HayGanador(char symbol) {
 
         if (esDiagonalGanadora(symbol) || esAntiDiagonalGanadora(symbol)) {
@@ -112,3 +200,7 @@ public class TicTacToe implements Serializable{
     }
 
 }
+
+
+
+
