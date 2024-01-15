@@ -128,12 +128,14 @@ public class TableroController implements Initializable {
                 juego.setSymbol(i, j, currentPlayer);
                 boton.setText(currentPlayer + "");
                 boton.setDisable(true);
+                
                 checkEstado();
 
             }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
+            realizarMovimientoComputadora();
             
             int i = GridPane.getRowIndex(boton);
             int j = GridPane.getColumnIndex(boton);
@@ -147,7 +149,6 @@ public class TableroController implements Initializable {
 
             }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-            realizarMovimientoComputadora();
 
         }
     }

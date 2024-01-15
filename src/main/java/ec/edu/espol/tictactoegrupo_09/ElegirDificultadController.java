@@ -84,7 +84,34 @@ public class ElegirDificultadController implements Initializable {
     
     @FXML
     private void empezarJuegoDificil(ActionEvent event) {
-        
+        chooseSymbol();
+        choosePlayer();
+        try {
+            gameMode = "JugadorVsComputadora";
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dificil.fxml"));
+            Parent root = fxmlLoader.load();
+            dificilController tableroDificil= fxmlLoader.getController();
+            tableroDificil.setInitialSymbol(symbolPlayer1);
+            tableroDificil.setCurrentPlayer(initialPlayer);
+            /*TableroController tableroController = fxmlLoader.getController();
+            tableroController.setSymbolPlayer1(symbolPlayer1);
+            tableroController.setGameMode(gameMode);
+            tableroController.setinitialSymbol(symbolPlayer1);
+            tableroController.setInitialPlayer(initialPlayer);
+            tableroController.newGame();*/
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Tres en Raya");
+            Image icono = new Image("images/tictactoe.png");
+            stage.getIcons().add(icono);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         
     }

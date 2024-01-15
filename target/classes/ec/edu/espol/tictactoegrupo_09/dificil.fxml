@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.tictactoegrupo_09.dificilController">
+   <children>
+      <ImageView fitHeight="372.0" fitWidth="503.0" layoutX="104.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../images/bckgnd.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="95.0" fitWidth="128.0" layoutX="104.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="95.0" fitWidth="128.0" layoutX="114.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im6" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im5" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im3" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im9" fitHeight="95.0" fitWidth="94.0" layoutX="355.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im8" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im7" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="262.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="95.0" fitWidth="94.0" layoutX="14.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im4" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="153.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im1" fitHeight="95.0" fitWidth="94.0" layoutX="131.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="im2" fitHeight="95.0" fitWidth="94.0" layoutX="242.0" layoutY="40.0" onMouseClicked="#changeImageView" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="volver" fitHeight="62.0" fitWidth="63.0" layoutX="7.0" layoutY="9.0" onMouseClicked="#volverMenu" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../images/Volver.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

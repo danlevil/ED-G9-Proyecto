@@ -1,5 +1,7 @@
 package ec.edu.espol.tictactoegrupo_09;
 
+import Modelo.Bloque;
+import Modelo.TableroC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +22,8 @@ public class App extends Application {
     private static Scene scene;
     private Button[] buttons = new Button[9];
     private char currentPlayer = 'X';
+    public static String urlOfire="images/oFire.png";
+    public static String urlXfire="images/xFire.png";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -45,6 +49,23 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        TableroC<String> miTablero= new TableroC<>();
+        miTablero.imprimirElementos();
+        miTablero.modificarValor("00", urlOfire);
+        miTablero.modificarValor("02", String.valueOf('X'));
+        miTablero.imprimirElementos();
+        System.out.println(miTablero.obtenerElemento("00"));
+        
+        TableroC<Bloque> miTablero2= new TableroC<>();
+        Bloque<Integer> b1= new Bloque<>();
+        b1.setCol(0);
+        b1.setFila(2);
+        b1.setContenido(12);
+        miTablero2.modificarValor("02", b1);
+        System.out.println(miTablero2.obtenerElemento("02"));
+        System.out.println("");
+        miTablero2.imprimirElementos();
+
     }
 
 }
