@@ -51,7 +51,9 @@ public class App extends Application {
         launch();
         TableroC<String> miTablero= new TableroC<>();
         miTablero.imprimirElementos();
+        System.out.println("primera modificacion");
         miTablero.modificarValor("00", urlOfire);
+        /*
         miTablero.modificarValor("02", String.valueOf('X'));
         miTablero.imprimirElementos();
         System.out.println(miTablero.obtenerElemento("00"));
@@ -64,8 +66,12 @@ public class App extends Application {
         miTablero2.modificarValor("02", b1);
         System.out.println(miTablero2.obtenerElemento("02"));
         System.out.println("");
-        miTablero2.imprimirElementos();
-
+        miTablero2.imprimirElementos();*/
+        System.out.println("Imprimir posibilidades");
+        //System.out.println(miTablero.generadorProbabilidades(urlOfire));
+        for(TableroC<String> t: miTablero.generadorProbabilidades(urlOfire)){
+            t.imprimirElementos();
+        }
     }
 
 }

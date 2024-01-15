@@ -4,7 +4,9 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,11 +15,13 @@ import java.util.Map;
  */
 public class TableroC<V>{
     
-    private HashMap<String,V> tablero= new HashMap();
+    private HashMap<String,V> tablero;
+    private HashMap<String,V> disponibles;
 
     public TableroC() {
         this.tablero=new HashMap<>();
         inicializarPredefinido(this.tablero);
+        this.disponibles=this.tablero;
     }
     
     private void inicializarPredefinido(Map<String,V> tablero){
@@ -41,10 +45,36 @@ public class TableroC<V>{
     }
     public void modificarValor(String clave, V nuevoValor) {
         if (tablero.containsKey(clave)) {
-            // Solo permitir la modificación si la clave existe
             tablero.put(clave, nuevoValor);
+            disponibles.remove(clave);
+            System.out.println(disponibles.keySet());
         } else {
             throw new IllegalArgumentException("La clave no existe en el HashMap");
         }
+    }
+    public void modificarValorProbable(String clave, V nuevoValor) {
+        if (tablero.containsKey(clave)) {
+            tablero.put(clave, nuevoValor);
+            
+        } else {
+            throw new IllegalArgumentException("La clave no existe en el HashMap");
+        }
+    }
+    public  List<TableroC<V>> generadorProbabilidades(V current){
+        List<String> listaDeClaves = new ArrayList<>(disponibles.keySet());
+        //System.out.println(listaDeClaves);
+        List<TableroC<V>>posibilidades = new ArrayList<>();
+        System.out.println(listaDeClaves);
+        System.out.println(this);
+        TableroC<V> copyBoard= this;
+        System.out.println(copyBoard);
+        for(int i=0;i<listaDeClaves.size();i++){
+            copyBoard.modificarValorProbable(listaDeClaves.get(i), current);
+            posibilidades.add(copyBoard);
+            
+        }
+        return posibilidades;
+
+        
     }
 }

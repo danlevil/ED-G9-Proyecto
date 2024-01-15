@@ -12,6 +12,7 @@ public class Bloque<E> {
     private int fila;
     private int col;
     private E contenido;
+    private boolean usado=false;
 
     public Bloque(int fila, int col, E contenido) {
         this.fila = fila;
@@ -24,7 +25,12 @@ public class Bloque<E> {
         this.col=-1;
         this.contenido=null;
     }
-
+    public void usado(){
+        this.usado=true;
+    }
+    public boolean getEstado(){
+        return usado;
+    }
     public int getFila() {
         return fila;
     }
