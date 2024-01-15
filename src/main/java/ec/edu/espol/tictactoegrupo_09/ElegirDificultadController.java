@@ -95,8 +95,8 @@ public class ElegirDificultadController implements Initializable {
             dificilController tableroDificil= fxmlLoader.getController();
             tableroDificil.setInitialSymbol(symbolPlayer1);
             tableroDificil.setCurrentPlayer(initialPlayer);
-            TableroController tableroController = fxmlLoader.getController();
-/*
+/*            TableroController tableroController = fxmlLoader.getController();
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
             Parent root = fxmlLoader.load();
 
