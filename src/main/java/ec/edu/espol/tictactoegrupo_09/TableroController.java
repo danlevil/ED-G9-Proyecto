@@ -4,7 +4,6 @@
  */
 package ec.edu.espol.tictactoegrupo_09;
 
-
 import Modelo.TicTacToe;
 import Modelo.Utility;
 import java.io.IOException;
@@ -45,13 +44,13 @@ public class TableroController implements Initializable {
     private String gameMode;
     private char initialSymbol; //No asignado
     private char currentPlayer;
+    private String dificultadJuego;
     private String initialPlayer;
     @FXML
     private Label winnerLabel;
     @FXML
     private ImageView imgVolver;
     List<Node> casillasDisponibles;
-    
 
     /**
      * Initializes the controller class.
@@ -90,9 +89,15 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
-            if(initialPlayer.equals("Computadora")){
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                realizarMovimientoComputadora();
+            if (initialPlayer.equals("Computadora")) {
+                if (dificultadJuego.equals("Facil")) {
+                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                    realizarMovimientoAleatiriosComputadora();
+                } else if (dificultadJuego.equals("Dificil")) {
+                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                    realizarMovimientoComputadoraDificil();
+                }
+
             }
         } else if (gameMode.equals("JugadorVsJugador")) {
             currentPlayer = initialSymbol;
@@ -102,14 +107,21 @@ public class TableroController implements Initializable {
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
-    
-    public void setInitialPlayer(String intialPlayer){
+
+    public void setDificultadJuego(String dificultadJuego) {
+        this.dificultadJuego = dificultadJuego;
+    }
+
+    public void setInitialPlayer(String intialPlayer) {
         this.initialPlayer = intialPlayer;
     }
-    
 
     public void setinitialSymbol(char symbol) {
         this.initialSymbol = symbol;
+    }
+
+    public String getDificultadJuego() {
+        return dificultadJuego;
     }
 
     public char getSymbolPlayer1() {
@@ -125,7 +137,7 @@ public class TableroController implements Initializable {
             int i = GridPane.getRowIndex(boton);
             int j = GridPane.getColumnIndex(boton);
             if (juego.getCells()[i][j] == ' ') {
-                juego.setSymbol(i, j, currentPlayer);
+                juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                 boton.setText(currentPlayer + "");
                 boton.setDisable(true);
                 
@@ -135,25 +147,46 @@ public class TableroController implements Initializable {
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
-            realizarMovimientoComputadora();
             
-            int i = GridPane.getRowIndex(boton);
-            int j = GridPane.getColumnIndex(boton);
-            if (juego.getCells()[i][j] == ' ') {
-                juego.setSymbol(i, j, currentPlayer);
-                boton.setText(currentPlayer + "");
-                boton.setDisable(true);
-                casillasDisponibles.remove(boton);
-                System.out.println(casillasDisponibles);
-                checkEstado();
+            
+
+            if (dificultadJuego.equals("Facil")) {
+                int i = GridPane.getRowIndex(boton);
+                int j = GridPane.getColumnIndex(boton);
+                if (juego.getCells()[i][j] == ' ') {
+                    juego.setSymbol(juego.getCells(), i, j, currentPlayer);
+                    boton.setText(currentPlayer + "");
+                    boton.setDisable(true);
+                    casillasDisponibles.remove(boton);
+                    System.out.println(casillasDisponibles);
+                    checkEstado();
+
+                }
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoAleatiriosComputadora();
+
+            } else if (dificultadJuego.equals("Dificil")) {
+                int i = GridPane.getRowIndex(boton);
+                int j = GridPane.getColumnIndex(boton);
+                if (juego.getCells()[i][j] == ' ') {
+                    juego.setSymbol(juego.getCells(), i, j, currentPlayer);
+                    boton.setText(currentPlayer + "");
+                    boton.setDisable(true);
+                    casillasDisponibles.remove(boton);
+                    System.out.println(casillasDisponibles);
+                    checkEstado();
+
+                }
+               
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoComputadoraDificil();
 
             }
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
 
         }
     }
 
-    private void realizarMovimientoComputadora() {
+    private void realizarMovimientoAleatiriosComputadora() {
 
         int filaComputadora, columnaComputadora;
         if (!casillasDisponibles.isEmpty()) {
@@ -165,7 +198,7 @@ public class TableroController implements Initializable {
             botonPC.setDisable(true);
             casillasDisponibles.remove(botonPC);
 
-            juego.setSymbol(filaComputadora, columnaComputadora, currentPlayer);
+            juego.setSymbol(juego.getCells(), filaComputadora, columnaComputadora, currentPlayer);
 
             checkEstado();
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
@@ -185,18 +218,79 @@ public class TableroController implements Initializable {
             if (nodo instanceof Button) {
                 Button boton = (Button) nodo;
                 boton.setDisable(true);
+
             }
         }
     }
 
+    private void resaltarGanador() {
+
+    }
+
+    public void realizarMovimientoComputadoraDificil() {
+        if (symbolPlayer1 == 'X') {
+            
+            if (initialPlayer.equals("Computadora")) {
+                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                mover(move);
+
+            }else{
+                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                mover(move);
+            
+            }
+
+        } else {
+            if (initialPlayer.equals("Computadora")) {
+                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                 mover(move);
+            }else{
+                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                 mover(move);
+            }
+            
+        }
+
+    }
+    
+    private void mover(int[] move){
+        juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
+
+        // Encuentra el botón correspondiente al movimiento en el GridPane
+        Button botonPC = null;
+        for (Node nodo : casillasDisponibles) {
+            if (nodo instanceof Button) {
+                int i = GridPane.getRowIndex(nodo);
+                int j = GridPane.getColumnIndex(nodo);
+                if (i == move[0] && j == move[1]) {
+                    botonPC = (Button) nodo;
+                    break;
+                }
+            }
+        }
+
+        if (botonPC != null) {
+            botonPC.setText(currentPlayer + "");
+            botonPC.setDisable(true);
+            casillasDisponibles.remove(botonPC);
+        } else {
+            // Manejar el empate o situación sin movimiento válido
+            System.out.println("Empate");
+        }
+
+        checkEstado();
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        
+    }
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
+            resaltarGanador();
             winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
             winnerLabel.setAlignment(Pos.CENTER);
             Utility.styleLabel(winnerLabel, 30, true);
             winnerLabel.setTextFill(Color.BLACK);
-        } else if (juego.isFull() && !juego.HayGanador(currentPlayer)) {
+        } else if (juego.isFull(juego.getCells()) && !juego.HayGanador(currentPlayer)) {
             winnerLabel.setText("EMPATE");
             winnerLabel.setAlignment(Pos.CENTER);
             Utility.styleLabel(winnerLabel, 30, true);
@@ -206,10 +300,10 @@ public class TableroController implements Initializable {
 
     @FXML
     private void regresarAmenu(MouseEvent event) throws IOException {
-        if(gameMode.equals("JugadorVsComputadora")){
-           
-        }else if(gameMode.equals("JugadorVsJugador")){
-           
+        if (gameMode.equals("JugadorVsComputadora")) {
+
+        } else if (gameMode.equals("JugadorVsJugador")) {
+
         }
     }
 

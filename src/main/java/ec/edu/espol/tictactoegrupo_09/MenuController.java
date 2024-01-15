@@ -141,18 +141,6 @@ public class MenuController implements Initializable {
     }
 
     private boolean initialPlayer() {
-//        ButtonType buttonTypeX = new ButtonType("X");
-//        ButtonType buttonTypeO = new ButtonType("O");
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Selecciona Turno");
-//        alert.setHeaderText("¿Qué símbolo quieres que empiece el juego?");
-//        alert.getButtonTypes().clear();
-//        alert.getButtonTypes().addAll(buttonTypeX, buttonTypeO);
-//         Optional<ButtonType> resultado = alert.showAndWait();
-//        alert.showAndWait();
-//        ButtonType buttonType = alert.getResult();
-//        initialSymbol = buttonType.getText().charAt(0);
-//        System.out.println(initialSymbol);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona Turno");

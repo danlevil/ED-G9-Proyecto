@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 Modelo/Utility.class
 Modelo/CalculadoraDeUtilidad.class
 Estructuras/TreeNode.class
+=======
+ec\edu\espol\tictactoegrupo_09\TableroController.class
+Estructuras\Tree.class
+Modelo\gameFileManager.class
+Modelo\Utility.class
+Modelo\MiniMax.class
+Modelo\TicTacToe.class
+>>>>>>> main
 module-info.class
 Modelo/GeneradorProbabilidad.class
 ec/edu/espol/tictactoegrupo_09/App.class

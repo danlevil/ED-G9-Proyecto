@@ -64,6 +64,7 @@ public class ElegirDificultadController implements Initializable {
             tableroController.setGameMode(gameMode);
             tableroController.setinitialSymbol(symbolPlayer1);
             tableroController.setInitialPlayer(initialPlayer);
+            tableroController.setDificultadJuego("Facil");
             tableroController.newGame();
             
             Scene scene = new Scene(root);
@@ -88,17 +89,29 @@ public class ElegirDificultadController implements Initializable {
         choosePlayer();
         try {
             gameMode = "JugadorVsComputadora";
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dificil.fxml"));
             Parent root = fxmlLoader.load();
             dificilController tableroDificil= fxmlLoader.getController();
             tableroDificil.setInitialSymbol(symbolPlayer1);
             tableroDificil.setCurrentPlayer(initialPlayer);
-            /*TableroController tableroController = fxmlLoader.getController();
+            TableroController tableroController = fxmlLoader.getController();
+/*
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
+            Parent root = fxmlLoader.load();
+
+            TableroController tableroController = fxmlLoader.getController();
+
             tableroController.setSymbolPlayer1(symbolPlayer1);
             tableroController.setGameMode(gameMode);
             tableroController.setinitialSymbol(symbolPlayer1);
             tableroController.setInitialPlayer(initialPlayer);
-            tableroController.newGame();*/
+
+            tableroController.newGame();
+
+            tableroController.setDificultadJuego("Dificil");
+            tableroController.newGame();
+*/
             
             Scene scene = new Scene(root);
             Stage stage = new Stage();
