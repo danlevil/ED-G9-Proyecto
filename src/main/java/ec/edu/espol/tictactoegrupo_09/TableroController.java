@@ -193,6 +193,7 @@ public class TableroController implements Initializable {
                     juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                     boton.setText(currentPlayer + "");
                     boton.setDisable(true);
+                    boton.setStyle("-fx-background-color: #d6d2d2;");
                     casillasDisponibles.remove(boton);
                     System.out.println(casillasDisponibles);
                     checkEstado();
@@ -214,6 +215,7 @@ public class TableroController implements Initializable {
                     juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                     boton.setText(currentPlayer + "");
                     boton.setDisable(true);
+                    boton.setStyle("-fx-background-color: #d6d2d2;");                   
                     casillasDisponibles.remove(boton);
                     System.out.println(casillasDisponibles);
                     checkEstado();
@@ -432,6 +434,7 @@ public class TableroController implements Initializable {
             if (node instanceof Button) {
                 Button button = (Button) node;
                 button.setDisable(false);
+                button.setStyle("-fx-background-color: #d6d2d2;");
                 button.setOnAction(event -> {
                 });
                 int row = GridPane.getRowIndex(button);
@@ -501,6 +504,7 @@ public class TableroController implements Initializable {
             if (suggestedButton != null) {
 
                 suggestedButton.setStyle("-fx-background-color: yellow;");
+                
             }
 
             System.out.println("pedi una pista");
