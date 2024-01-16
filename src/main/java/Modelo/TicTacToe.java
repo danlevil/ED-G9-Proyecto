@@ -48,7 +48,6 @@ public class TicTacToe implements Serializable {
         if (x >= 0 && x < tablero.length && y >= 0 && y < tablero[x].length) {
             tablero[x][y] = symbolPlayer;
         } else {
-            // Manejar el caso en el que x o y están fuera de los límites
             System.out.println(" ");
         }
     }
@@ -89,22 +88,11 @@ public class TicTacToe implements Serializable {
         return true;
     }
 
-    //---------------------------------------------------------------//
-//    public boolean isFull() {
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                if (this.cells[i][j] == ' ') {
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
+
     public boolean isFull(char[][] board) {
         return posicionesVacias(board).size() == 0;
     }
 
-    // posiblemente se puede usar pero en el TebleroController ya se está usando una lista de nodos en este caso los nodos son los nodos del gridpanel
     public static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
         List<int[]> posicionesVacias = new ArrayList<>();
         for (int x = 0; x < TableroDeJuego.length; x++) {
@@ -134,7 +122,7 @@ public class TicTacToe implements Serializable {
             if (maximizingPlayer) {
                 cells[x][y] = 'X';
                 int[] currentMove = abminimax(depth - 1, alpha, beta, false);
-                cells[x][y] = ' ';  // Deshacer el movimiento
+                cells[x][y] = ' '; 
 
                 if (currentMove[2] > bestMove[2]) {
                     bestMove[0] = x;
@@ -144,12 +132,12 @@ public class TicTacToe implements Serializable {
 
                 alpha = Math.max(alpha, bestMove[2]);
                 if (beta <= alpha) {
-                    break;  // Poda alfa-beta
+                    break; 
                 }
             } else {
                 cells[x][y] = 'O';
                 int[] currentMove = abminimax(depth - 1, alpha, beta, true);
-                cells[x][y] = ' ';  // Deshacer el movimiento
+                cells[x][y] = ' ';  
 
                 if (currentMove[2] < bestMove[2]) {
                     bestMove[0] = x;
@@ -159,7 +147,7 @@ public class TicTacToe implements Serializable {
 
                 beta = Math.min(beta, bestMove[2]);
                 if (beta <= alpha) {
-                    break;  // Poda alfa-beta
+                    break;  
                 }
             }
         }
@@ -184,7 +172,7 @@ public class TicTacToe implements Serializable {
             node.addChild(child);
 
             int[] currentMove = abminimax(depth - 1, alpha, beta, !maximizingPlayer, child);
-            cells[x][y] = ' ';  // Deshacer el movimiento
+            cells[x][y] = ' ';  
 
             child.setMove(new int[]{x, y});
             child.setScore(currentMove[2]);
@@ -199,12 +187,12 @@ public class TicTacToe implements Serializable {
             if (maximizingPlayer) {
                 alpha = Math.max(alpha, bestMove[2]);
                 if (beta <= alpha) {
-                    break;  // Poda alfa-beta
+                    break;  
                 }
             } else {
                 beta = Math.min(beta, bestMove[2]);
                 if (beta <= alpha) {
-                    break;  // Poda alfa-beta
+                    break;  
                 }
             }
         }
@@ -212,7 +200,7 @@ public class TicTacToe implements Serializable {
         return bestMove;
     }
 
-    // Método de ayuda para obtener la puntuación del estado actual del tablero
+    
     private int getScore() {
         if (HayGanador('X')) {
             return 10;
