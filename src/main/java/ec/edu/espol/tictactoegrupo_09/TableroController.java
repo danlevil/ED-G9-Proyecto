@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.tictactoegrupo_09;
 
+import Estructuras.TreeNode;
 import Modelo.TicTacToe;
 import Modelo.Utility;
 import java.io.IOException;
@@ -219,30 +220,50 @@ public class TableroController implements Initializable {
         }
     }
 
+//    public void realizarMovimientoComputadoraDificil() {
+//        if (symbolPlayer1 == 'X') {
+//
+//            if (initialPlayer.equals("Computadora")) {
+//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+//                mover(move);
+//
+//            } else {
+//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+//                mover(move);
+//
+//            }
+//
+//        } else {
+//            if (initialPlayer.equals("Computadora")) {
+//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+//                mover(move);
+//            } else {
+//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+//                mover(move);
+//            }
+//
+//        }
+//
+//    }
     public void realizarMovimientoComputadoraDificil() {
+        int[] move;
         if (symbolPlayer1 == 'X') {
-
+            TreeNode root = new TreeNode(null, 0);
             if (initialPlayer.equals("Computadora")) {
-                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                mover(move);
-
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
             } else {
-                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                mover(move);
-
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
             }
-
         } else {
+            TreeNode root = new TreeNode(null, 0);
             if (initialPlayer.equals("Computadora")) {
-                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-                mover(move);
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true, root);
             } else {
-                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-                mover(move);
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true, root);
             }
-
         }
 
+        mover(move);
     }
 
     private void mover(int[] move) {
@@ -325,7 +346,8 @@ public class TableroController implements Initializable {
             if (node instanceof Button) {
                 Button button = (Button) node;
                 button.setDisable(false);
-                button.setOnAction(event -> {});
+                button.setOnAction(event -> {
+                });
                 int row = GridPane.getRowIndex(button);
                 int col = GridPane.getColumnIndex(button);
                 if ((row == row1 && col == col1) || (row == row2 && col == col2) || (row == row3 && col == col3)) {
