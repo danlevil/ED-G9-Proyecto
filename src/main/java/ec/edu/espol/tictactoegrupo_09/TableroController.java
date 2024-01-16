@@ -50,8 +50,6 @@ public class TableroController implements Initializable {
     private String initialPlayer;
     @FXML
     private Label winnerLabel;
-    @FXML
-    private ImageView imgVolver;
     List<Node> casillasDisponibles;
 
     /**
@@ -217,6 +215,8 @@ public class TableroController implements Initializable {
         }
     }
 
+    
+    
     private void realizarMovimientoAleatiriosComputadora() {
 
         int filaComputadora, columnaComputadora;
@@ -291,12 +291,12 @@ public class TableroController implements Initializable {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
                 mover(move);
             }
-        } else if (symbolPlayer1 == 'X') {
+        } else  {
 
             int[] move;
             if (symbolPlayer1 == 'X') {
                 TreeNode root = new TreeNode(null, 0);
-
+                
                 if (initialPlayer.equals("Computadora")) {
                     move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
                 } else {
@@ -362,7 +362,6 @@ public class TableroController implements Initializable {
         }
     }
 
-    @FXML
     private void regresarAmenu(MouseEvent event) throws IOException {
         if (gameMode.equals("JugadorVsComputadora")) {
 
