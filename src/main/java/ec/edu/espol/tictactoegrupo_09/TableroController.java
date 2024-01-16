@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -84,8 +85,23 @@ public class TableroController implements Initializable {
             }
         }
 
-        if (gameMode.equals("ComputerVsComputer")) {
-            // makeComputerMove();
+        if (gameMode.equals("ComputadoraVsComputadora")) {
+            currentPlayer = initialSymbol;
+            initialPlayer = "Computadora";
+
+            while (!juego.isFull(juego.getCells()) && !juego.HayGanador(currentPlayer)) {
+                if (currentPlayer == 'X') {
+                    realizarMovimientoComputadoraDificil();
+                    DibujarTableroEnConsola(juego.getCells());
+                
+                } else if (currentPlayer == 'O') {
+                    realizarMovimientoComputadoraDificil();
+                    DibujarTableroEnConsola(juego.getCells());
+                   
+                }
+
+            }
+
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
@@ -104,6 +120,21 @@ public class TableroController implements Initializable {
         }
     }
 
+    
+   static void DibujarTableroEnConsola(char[][] board) {
+    Map<Character, String> symbols = Map.of('X', "X", 'O', "O", ' ', " ");
+    for (char[] row : board) {
+        for (char col : row) {
+            String symbol = symbols.get(col);
+            System.out.print("| " + symbol + " |");
+        }
+        System.out.println("\n---------------");
+        
+    }
+    System.out.println("===============");
+}
+    
+    
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
@@ -179,6 +210,9 @@ public class TableroController implements Initializable {
 
             }
 
+        }else if(gameMode.equals("ComputadoraVsComputadora")){
+            
+            
         }
     }
 
@@ -224,7 +258,16 @@ public class TableroController implements Initializable {
     }
 
     public void realizarMovimientoComputadoraDificil() {
-        if (symbolPlayer1 == 'X') {
+         if (gameMode.equals("ComputadoraVsComputadora")){
+             if (currentPlayer == 'X') {
+                  int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                  mover(move);
+             
+             }else if(currentPlayer == 'O'){
+                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                mover(move);
+             }
+        }else if (symbolPlayer1 == 'X') {
             
             if (initialPlayer.equals("Computadora")) {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
@@ -271,7 +314,7 @@ public class TableroController implements Initializable {
             casillasDisponibles.remove(botonPC);
         } else {
             // Manejar el empate o situación sin movimiento válido
-            System.out.println("Empate");
+            System.out.println(" ");
         }
 
         checkEstado();

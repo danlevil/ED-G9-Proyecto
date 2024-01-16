@@ -84,7 +84,9 @@ public class MenuController implements Initializable {
     @FXML
     private void modo2(ActionEvent event) {
         gameMode = "ComputadoraVsComputadora";
-        openGameWindow();
+        if (initialPlayer()) {
+        openGameWindow();}
+     
     }
 
     @FXML

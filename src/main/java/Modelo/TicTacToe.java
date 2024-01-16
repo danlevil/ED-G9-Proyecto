@@ -49,7 +49,7 @@ public class TicTacToe implements Serializable{
             tablero[x][y] = symbolPlayer;
         } else {
             // Manejar el caso en el que x o y están fuera de los límites
-            System.out.println("casillas llenas");
+            System.out.println(" ");
         }
     }
 
