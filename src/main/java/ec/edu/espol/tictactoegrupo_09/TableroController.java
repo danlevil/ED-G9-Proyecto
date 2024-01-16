@@ -21,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -51,7 +52,11 @@ public class TableroController implements Initializable {
     @FXML
     private Label winnerLabel;
     List<Node> casillasDisponibles;
-
+    @FXML
+    private int filaSugerida;
+    private int colSugerida;
+    @FXML
+    private ImageView PistaBtn;
     /**
      * Initializes the controller class.
      */
@@ -68,7 +73,7 @@ public class TableroController implements Initializable {
         GridPane.setConstraints(button22, 2, 2);
         Utility.changeBackGround("#F0FFFF", anchorPane);
         casillasDisponibles = new ArrayList<>(gridPane.getChildren());
-
+        
     }
 
     public void newGame() {
@@ -104,14 +109,18 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
+            Image im= new Image("images/bulb2.jpg");
+            PistaBtn.setImage(im);
             if (initialPlayer.equals("Computadora")) {
                 if (dificultadJuego.equals("Facil")) {
                     currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                     realizarMovimientoAleatiriosComputadora();
-                } else if (dificultadJuego.equals("Dificil")) {
-                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                    realizarMovimientoComputadoraDificil();
-                }
+            } else if (dificultadJuego.equals("Dificil")) {
+                
+
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                realizarMovimientoComputadoraDificil();
+            }
 
             }
         } else if (gameMode.equals("JugadorVsJugador")) {
@@ -177,6 +186,7 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             if (dificultadJuego.equals("Facil")) {
+                
                 int i = GridPane.getRowIndex(boton);
                 int j = GridPane.getColumnIndex(boton);
                 if (juego.getCells()[i][j] == ' ') {
@@ -192,6 +202,9 @@ public class TableroController implements Initializable {
                 realizarMovimientoAleatiriosComputadora();
 
             } else if (dificultadJuego.equals("Dificil")) {
+                Image im= new Image("images/bulb2.jpg");
+                PistaBtn.setImage(im);
+
                 int i = GridPane.getRowIndex(boton);
                 int j = GridPane.getColumnIndex(boton);
                 if (juego.getCells()[i][j] == ' ') {
@@ -291,12 +304,12 @@ public class TableroController implements Initializable {
                 int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
                 mover(move);
             }
-        } else  {
+        } else {
 
             int[] move;
             if (symbolPlayer1 == 'X') {
                 TreeNode root = new TreeNode(null, 0);
-                
+
                 if (initialPlayer.equals("Computadora")) {
                     move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
                 } else {
@@ -312,7 +325,12 @@ public class TableroController implements Initializable {
             }
 
             mover(move);
+
+        
+
         }
+
+    
 
     }
 
@@ -406,4 +424,55 @@ public class TableroController implements Initializable {
         }
     }
 
+    @FXML
+    private void generarPista(MouseEvent event) {
+        int suggestedRow ;
+        int suggestedCol ;
+        int []posicionesVacias;
+        if(symbolPlayer1 == 'X'){
+            posicionesVacias= juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            suggestedRow = posicionesVacias[0];
+            suggestedCol = posicionesVacias[1];
+        }else{
+            posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+            suggestedRow = posicionesVacias[0];
+            suggestedCol = posicionesVacias[1];
+        }
+        Button suggestedButton = findButtonById("button" + suggestedRow + suggestedCol);
+
+        for (Node nodo : casillasDisponibles) {
+            if (nodo instanceof Button) {
+                int i = GridPane.getRowIndex(nodo);
+                int j = GridPane.getColumnIndex(nodo);
+                if (i == posicionesVacias[0] && j == posicionesVacias[1]) {
+                    suggestedButton = (Button) nodo;
+                    if(suggestedButton.isDisabled()){
+                        suggestedButton.setStyle("-fx-background-color: #d6d2d2;");
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (suggestedButton != null) {
+            suggestedButton.setStyle("-fx-background-color: yellow;");
+
+        }
+        
+        System.out.println("pedi una pista");
+        
+    }
+        
+
+    private Button findButtonById(String id) {
+        for (int i = 0; i < gridPane.getChildren().size(); i++) {
+            if (gridPane.getChildren().get(i) instanceof Button) {
+                Button button = (Button) gridPane.getChildren().get(i);
+                if (button.getId().equals(id)) {
+                    return button;
+                }
+            }
+        }
+        return null; 
+    }
 }

@@ -105,7 +105,7 @@ public class TicTacToe implements Serializable {
     }
 
     // posiblemente se puede usar pero en el TebleroController ya se está usando una lista de nodos en este caso los nodos son los nodos del gridpanel
-    static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
+    public static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
         List<int[]> posicionesVacias = new ArrayList<>();
         for (int x = 0; x < TableroDeJuego.length; x++) {
             for (int y = 0; y < TableroDeJuego[x].length; y++) {
@@ -163,7 +163,6 @@ public class TicTacToe implements Serializable {
                 }
             }
         }
-
         return bestMove;
     }
     public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer, TreeNode node) {
