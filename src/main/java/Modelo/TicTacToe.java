@@ -113,7 +113,7 @@ public class TicTacToe implements Serializable {
         List<int[]> emptyCells = posicionesVacias(cells);
 
         if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
-            int score = getScore();
+            int score = getPuntaje();
             return new int[]{-1, -1, score};
         }
 
@@ -164,7 +164,7 @@ public class TicTacToe implements Serializable {
         List<int[]> emptyCells = posicionesVacias(cells);
 
         if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
-            int score = getScore();
+            int score = getPuntaje();
             return new int[]{-1, -1, score};
         }
 
@@ -208,7 +208,7 @@ public class TicTacToe implements Serializable {
     }
 
     
-    private int getScore() {
+    private int getPuntaje() {
         if (HayGanador('X')) {
             return 10;
         } else if (HayGanador('O')) {

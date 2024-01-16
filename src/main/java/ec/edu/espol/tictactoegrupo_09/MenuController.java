@@ -105,7 +105,7 @@ public class MenuController implements Initializable {
             tableroController.setSymbolPlayer1(symbolPlayer1);
             tableroController.setGameMode(gameMode);
             tableroController.setinitialSymbol(initialSymbol);
-            tableroController.newGame();
+            tableroController.nuevoJuego();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();

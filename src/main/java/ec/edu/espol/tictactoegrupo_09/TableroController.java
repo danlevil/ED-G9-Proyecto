@@ -76,7 +76,7 @@ public class TableroController implements Initializable {
         
     }
 
-    public void newGame() {
+    public void nuevoJuego() {
         System.out.println(gameMode);
         juego = new TicTacToe();
 
@@ -85,7 +85,7 @@ public class TableroController implements Initializable {
                 Button boton = (Button) nodo;
                 boton.setText("");
                 boton.setDisable(false);
-                boton.setOnAction(e -> clickButton(boton));
+                boton.setOnAction(e -> clickearBoton(boton));
             }
         }
 
@@ -171,7 +171,7 @@ public class TableroController implements Initializable {
         this.symbolPlayer1 = symbolPlayer1;
     }
 
-    private void clickButton(Button boton) {
+    private void clickearBoton(Button boton) {
         if (gameMode.equals("JugadorVsJugador")) {
             int i = GridPane.getRowIndex(boton);
             int j = GridPane.getColumnIndex(boton);
@@ -182,7 +182,7 @@ public class TableroController implements Initializable {
                 checkEstado();
 
             }
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; // Cambia el turno al otro jugador
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; 
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             if (dificultadJuego.equals("Facil")) {
@@ -193,7 +193,7 @@ public class TableroController implements Initializable {
                     juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                     boton.setText(currentPlayer + "");
                     boton.setDisable(true);
-                    boton.setStyle("-fx-background-color: #d6d2d2;");
+                    boton.setStyle("-fx-background-color: #d6d2d2;");                    
                     casillasDisponibles.remove(boton);
                     System.out.println(casillasDisponibles);
                     checkEstado();
@@ -272,31 +272,7 @@ public class TableroController implements Initializable {
         }
     }
 
-//    public void realizarMovimientoComputadoraDificil() {
-//        if (symbolPlayer1 == 'X') {
-//
-//            if (initialPlayer.equals("Computadora")) {
-//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-//                mover(move);
-//
-//            } else {
-//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-//                mover(move);
-//
-//            }
-//
-//        } else {
-//            if (initialPlayer.equals("Computadora")) {
-//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-//                mover(move);
-//            } else {
-//                int[] move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-//                mover(move);
-//            }
-//
-//        }
-//
-//    }
+
     public void realizarMovimientoComputadoraDificil() {
 
         if (gameMode.equals("ComputadoraVsComputadora")) {
@@ -355,8 +331,7 @@ public class TableroController implements Initializable {
         }else{
             juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
 
-        // Encuentra el botón correspondiente al movimiento en el GridPane
-        //Button botonPC = null;
+
         for (Node nodo : casillasDisponibles) {
             if (nodo instanceof Button) {
                 int i = GridPane.getRowIndex(nodo);
@@ -373,7 +348,7 @@ public class TableroController implements Initializable {
             botonPC.setDisable(true);
             casillasDisponibles.remove(botonPC);
         } else {
-            // Manejar el empate o situación sin movimiento válido
+            
             System.out.println(" ");
         }
 
@@ -384,11 +359,23 @@ public class TableroController implements Initializable {
         
 
     }
+    private void quitarLoAmarillo() {
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof Button) {
+                Button button = (Button) node;
+                if (button.getStyle().equals("-fx-background-color: yellow;")) {
+                    button.setStyle("-fx-background-color: #d6d2d2;");
+                }
 
+            }
+
+        }
+    }
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
             resaltarGanador();
+            
             winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
             winnerLabel.setAlignment(Pos.CENTER);
             Utility.styleLabel(winnerLabel, 30, true);
@@ -399,6 +386,7 @@ public class TableroController implements Initializable {
             Utility.styleLabel(winnerLabel, 30, true);
             winnerLabel.setTextFill(Color.BLACK);
         }
+        quitarLoAmarillo();
     }
 
     private void regresarAmenu(MouseEvent event) throws IOException {
@@ -412,24 +400,24 @@ public class TableroController implements Initializable {
     private void resaltarGanador() {
         char[][] tablero = juego.getCells();
         for (int i = 0; i < 3; i++) {
-            if (checkLine(tablero, i, 0, i, 1, i, 2) || checkLine(tablero, 0, i, 1, i, 2, i)) {
+            if (revisarLinea(tablero, i, 0, i, 1, i, 2) || revisarLinea(tablero, 0, i, 1, i, 2, i)) {
                 return;
             }
         }
-        if (checkLine(tablero, 0, 0, 1, 1, 2, 2) || checkLine(tablero, 0, 2, 1, 1, 2, 0)) {
+        if (revisarLinea(tablero, 0, 0, 1, 1, 2, 2) || revisarLinea(tablero, 0, 2, 1, 1, 2, 0)) {
             return;
         }
     }
 
-    private boolean checkLine(char[][] tablero, int row1, int col1, int row2, int col2, int row3, int col3) {
+    private boolean revisarLinea(char[][] tablero, int row1, int col1, int row2, int col2, int row3, int col3) {
         if (tablero[row1][col1] != '\0' && tablero[row1][col1] == tablero[row2][col2] && tablero[row2][col2] == tablero[row3][col3]) {
-            highlightButtons(row1, col1, row2, col2, row3, col3);
+            resaltarBotones(row1, col1, row2, col2, row3, col3);
             return true;
         }
         return false;
     }
 
-    private void highlightButtons(int row1, int col1, int row2, int col2, int row3, int col3) {
+    private void resaltarBotones(int row1, int col1, int row2, int col2, int row3, int col3) {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Button) {
                 Button button = (Button) node;
@@ -477,7 +465,7 @@ public class TableroController implements Initializable {
             }
 
         }
-        Button suggestedButton = findButtonById("button" + suggestedRow + suggestedCol);
+        Button suggestedButton = encontrarBotonPorID("button" + suggestedRow + suggestedCol);
 
         if (juego.isEmpty(juego.getCells())) {
             if (suggestedButton != null) {
@@ -514,7 +502,7 @@ public class TableroController implements Initializable {
     }
 
 
-    private Button findButtonById(String id) {
+    private Button encontrarBotonPorID(String id) {
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
             if (gridPane.getChildren().get(i) instanceof Button) {
                 Button button = (Button) gridPane.getChildren().get(i);

@@ -66,7 +66,7 @@ public class ElegirDificultadController implements Initializable {
                     tableroController.setinitialSymbol(symbolPlayer1);
                     tableroController.setInitialPlayer(initialPlayer);
                     tableroController.setDificultadJuego("Facil");
-                    tableroController.newGame();
+                    tableroController.nuevoJuego();
 
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
@@ -102,7 +102,7 @@ public class ElegirDificultadController implements Initializable {
                     tableroController.setinitialSymbol(symbolPlayer1);
                     tableroController.setInitialPlayer(initialPlayer);
                     tableroController.setDificultadJuego("Dificil");
-                    tableroController.newGame();
+                    tableroController.nuevoJuego();
 
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
