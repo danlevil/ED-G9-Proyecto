@@ -117,55 +117,55 @@ public class TicTacToe implements Serializable {
         return posicionesVacias;
     }
 
-//    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
-//        List<int[]> emptyCells = posicionesVacias(cells);
-//
-//        if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
-//            int score = getScore();
-//            return new int[]{-1, -1, score};
-//        }
-//
-//        int[] bestMove = new int[]{-1, -1, maximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE};
-//
-//        for (int[] cell : emptyCells) {
-//            int x = cell[0];
-//            int y = cell[1];
-//
-//            if (maximizingPlayer) {
-//                cells[x][y] = 'X';
-//                int[] currentMove = abminimax(depth - 1, alpha, beta, false);
-//                cells[x][y] = ' ';  // Deshacer el movimiento
-//
-//                if (currentMove[2] > bestMove[2]) {
-//                    bestMove[0] = x;
-//                    bestMove[1] = y;
-//                    bestMove[2] = currentMove[2];
-//                }
-//
-//                alpha = Math.max(alpha, bestMove[2]);
-//                if (beta <= alpha) {
-//                    break;  // Poda alfa-beta
-//                }
-//            } else {
-//                cells[x][y] = 'O';
-//                int[] currentMove = abminimax(depth - 1, alpha, beta, true);
-//                cells[x][y] = ' ';  // Deshacer el movimiento
-//
-//                if (currentMove[2] < bestMove[2]) {
-//                    bestMove[0] = x;
-//                    bestMove[1] = y;
-//                    bestMove[2] = currentMove[2];
-//                }
-//
-//                beta = Math.min(beta, bestMove[2]);
-//                if (beta <= alpha) {
-//                    break;  // Poda alfa-beta
-//                }
-//            }
-//        }
-//
-//        return bestMove;
-//    }
+    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
+        List<int[]> emptyCells = posicionesVacias(cells);
+
+        if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
+            int score = getScore();
+            return new int[]{-1, -1, score};
+        }
+
+        int[] bestMove = new int[]{-1, -1, maximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE};
+
+        for (int[] cell : emptyCells) {
+            int x = cell[0];
+            int y = cell[1];
+
+            if (maximizingPlayer) {
+                cells[x][y] = 'X';
+                int[] currentMove = abminimax(depth - 1, alpha, beta, false);
+                cells[x][y] = ' ';  // Deshacer el movimiento
+
+                if (currentMove[2] > bestMove[2]) {
+                    bestMove[0] = x;
+                    bestMove[1] = y;
+                    bestMove[2] = currentMove[2];
+                }
+
+                alpha = Math.max(alpha, bestMove[2]);
+                if (beta <= alpha) {
+                    break;  // Poda alfa-beta
+                }
+            } else {
+                cells[x][y] = 'O';
+                int[] currentMove = abminimax(depth - 1, alpha, beta, true);
+                cells[x][y] = ' ';  // Deshacer el movimiento
+
+                if (currentMove[2] < bestMove[2]) {
+                    bestMove[0] = x;
+                    bestMove[1] = y;
+                    bestMove[2] = currentMove[2];
+                }
+
+                beta = Math.min(beta, bestMove[2]);
+                if (beta <= alpha) {
+                    break;  // Poda alfa-beta
+                }
+            }
+        }
+
+        return bestMove;
+    }
     public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer, TreeNode node) {
         List<int[]> emptyCells = posicionesVacias(cells);
 

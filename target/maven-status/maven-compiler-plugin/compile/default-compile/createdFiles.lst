@@ -1,9 +1,9 @@
-ec\edu\espol\tictactoegrupo_09\TableroController.class
-Modelo\gameFileManager.class
-Modelo\Utility.class
-Modelo\TicTacToe.class
+Modelo/Utility.class
+Modelo/TicTacToe.class
+Estructuras/TreeNode.class
 module-info.class
-ec\edu\espol\tictactoegrupo_09\MenuController.class
-ec\edu\espol\tictactoegrupo_09\App.class
-ec\edu\espol\tictactoegrupo_09\ElegirDificultadController.class
-Estructuras\TreeNode.class
+ec/edu/espol/tictactoegrupo_09/App.class
+Modelo/gameFileManager.class
+ec/edu/espol/tictactoegrupo_09/TableroController.class
+ec/edu/espol/tictactoegrupo_09/ElegirDificultadController.class
+ec/edu/espol/tictactoegrupo_09/MenuController.class
