@@ -72,7 +72,7 @@ public class TableroController implements Initializable {
         GridPane.setConstraints(button22, 2, 2);
         Utility.changeBackGround("#F0FFFF", anchorPane);
         casillasDisponibles = new ArrayList<>(gridPane.getChildren());
-
+        
     }
 
     public void newGame() {
@@ -93,13 +93,14 @@ public class TableroController implements Initializable {
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             currentPlayer = initialSymbol;
+            Image im= new Image("images/bulb2.jpg");
+            pistaBtn.setImage(im);
             if (initialPlayer.equals("Computadora")) {
                 if (dificultadJuego.equals("Facil")) {
                     currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                     realizarMovimientoAleatiriosComputadora();
             } else if (dificultadJuego.equals("Dificil")) {
-                Image im= new Image("images/bulb2.jpg");
-                pistaBtn.setImage(im);
+                
 
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 realizarMovimientoComputadoraDificil();
@@ -325,11 +326,11 @@ public class TableroController implements Initializable {
         int suggestedCol ;
         int []posicionesVacias;
         if(symbolPlayer1 == 'X'){
-            posicionesVacias= juego.abminimax(3, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            posicionesVacias= juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             suggestedRow = posicionesVacias[0];
             suggestedCol = posicionesVacias[1];
         }else{
-            posicionesVacias = juego.abminimax(3, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+            posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
             suggestedRow = posicionesVacias[0];
             suggestedCol = posicionesVacias[1];
         }
