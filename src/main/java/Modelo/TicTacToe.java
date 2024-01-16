@@ -92,6 +92,10 @@ public class TicTacToe implements Serializable {
     public boolean isFull(char[][] board) {
         return posicionesVacias(board).size() == 0;
     }
+    
+    public boolean isEmpty(char[][] board){
+        return posicionesVacias(board).size() == 9;
+    }
 
     public static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
         List<int[]> posicionesVacias = new ArrayList<>();
@@ -153,6 +157,9 @@ public class TicTacToe implements Serializable {
         }
         return bestMove;
     }
+    
+    
+    
     public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer, TreeNode node) {
         List<int[]> emptyCells = posicionesVacias(cells);
 

@@ -338,10 +338,23 @@ public class TableroController implements Initializable {
     }
 
     private void mover(int[] move) {
-        juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
+        Button botonPC = null;
+        
+        if(juego.isEmpty(juego.getCells())){
+ 
+            juego.setSymbol(juego.getCells(), 1, 1, currentPlayer);
+            botonPC = (Button)casillasDisponibles.get(4);
+            
+            botonPC.setText(currentPlayer + "");
+            botonPC.setDisable(true);
+            casillasDisponibles.remove(botonPC);
+            checkEstado();
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        }else{
+            juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
 
         // Encuentra el botón correspondiente al movimiento en el GridPane
-        Button botonPC = null;
+        //Button botonPC = null;
         for (Node nodo : casillasDisponibles) {
             if (nodo instanceof Button) {
                 int i = GridPane.getRowIndex(nodo);
@@ -364,6 +377,9 @@ public class TableroController implements Initializable {
 
         checkEstado();
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        
+        }
+        
 
     }
 
@@ -429,43 +445,70 @@ public class TableroController implements Initializable {
 
     @FXML
     private void generarPista(MouseEvent event) {
-        int suggestedRow ;
-        int suggestedCol ;
-        int []posicionesVacias;
-        if(symbolPlayer1 == 'X'){
-            posicionesVacias= juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-            suggestedRow = posicionesVacias[0];
-            suggestedCol = posicionesVacias[1];
-        }else{
-            posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-            suggestedRow = posicionesVacias[0];
-            suggestedCol = posicionesVacias[1];
+        int suggestedRow;
+        int suggestedCol;
+        int[] posicionesVacias;
+
+        if (symbolPlayer1 == 'X') {
+            if (juego.isEmpty(juego.getCells())) {
+                posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                suggestedRow = 1;
+                suggestedCol = 1;
+            } else {
+                posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                suggestedRow = posicionesVacias[0];
+                suggestedCol = posicionesVacias[1];
+
+            }
+
+        } else {
+            if (juego.isEmpty(juego.getCells())) {
+                posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                suggestedRow = 1;
+                suggestedCol = 1;
+            } else {
+                posicionesVacias = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                suggestedRow = posicionesVacias[0];
+                suggestedCol = posicionesVacias[1];
+
+            }
+
         }
         Button suggestedButton = findButtonById("button" + suggestedRow + suggestedCol);
 
-        for (Node nodo : casillasDisponibles) {
-            if (nodo instanceof Button) {
-                int i = GridPane.getRowIndex(nodo);
-                int j = GridPane.getColumnIndex(nodo);
-                if (i == posicionesVacias[0] && j == posicionesVacias[1]) {
-                    suggestedButton = (Button) nodo;
-                    if(suggestedButton.isDisabled()){
-                        suggestedButton.setStyle("-fx-background-color: #d6d2d2;");
+        if (juego.isEmpty(juego.getCells())) {
+            if (suggestedButton != null) {
+
+                suggestedButton.setStyle("-fx-background-color: yellow;");
+            }
+
+            System.out.println("pedi una pista");
+        } else {
+            for (Node nodo : casillasDisponibles) {
+                if (nodo instanceof Button) {
+                    int i = GridPane.getRowIndex(nodo);
+                    int j = GridPane.getColumnIndex(nodo);
+                    if (i == posicionesVacias[0] && j == posicionesVacias[1]) {
+                        suggestedButton = (Button) nodo;
+                        if (suggestedButton.isDisabled()) {
+                            suggestedButton.setStyle("-fx-background-color: #d6d2d2;");
+                        }
+                        break;
                     }
-                    break;
                 }
             }
+
+            if (suggestedButton != null) {
+
+                suggestedButton.setStyle("-fx-background-color: yellow;");
+            }
+
+            System.out.println("pedi una pista");
+
         }
 
-        if (suggestedButton != null) {
-            suggestedButton.setStyle("-fx-background-color: yellow;");
-
-        }
-        
-        System.out.println("pedi una pista");
-        
     }
-        
+
 
     private Button findButtonById(String id) {
         for (int i = 0; i < gridPane.getChildren().size(); i++) {

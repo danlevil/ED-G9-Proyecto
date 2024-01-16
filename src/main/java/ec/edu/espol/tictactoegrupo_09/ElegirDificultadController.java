@@ -128,7 +128,7 @@ public class ElegirDificultadController implements Initializable {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona símbolo");
-        alert.setHeaderText("¿Qué símbolo quieres para Jugador 1?");
+        alert.setHeaderText("¿Con qué símbolo quieres jugar?");
         alert.getButtonTypes().setAll(buttonTypeX, buttonTypeO, buttonTypeCancel);
 
         Button cancelButton = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
