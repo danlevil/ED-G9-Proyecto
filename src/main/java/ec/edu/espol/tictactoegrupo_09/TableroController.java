@@ -57,6 +57,7 @@ public class TableroController implements Initializable {
     private int colSugerida;
     @FXML
     private ImageView PistaBtn;
+
     /**
      * Initializes the controller class.
      */
@@ -73,7 +74,7 @@ public class TableroController implements Initializable {
         GridPane.setConstraints(button22, 2, 2);
         Utility.changeBackGround("#F0FFFF", anchorPane);
         casillasDisponibles = new ArrayList<>(gridPane.getChildren());
-        
+
     }
 
     public void nuevoJuego() {
@@ -90,37 +91,35 @@ public class TableroController implements Initializable {
         }
 
         if (gameMode.equals("ComputadoraVsComputadora")) {
-            currentPlayer = initialSymbol;
+            currentPlayer = initialSymbol; 
             initialPlayer = "Computadora";
 
             while (!juego.isFull(juego.getCells()) && !juego.HayGanador(currentPlayer)) {
                 if (currentPlayer == 'X') {
                     realizarMovimientoComputadoraDificil();
                     DibujarTableroEnConsola(juego.getCells());
-                
+
                 } else if (currentPlayer == 'O') {
                     realizarMovimientoComputadoraDificil();
                     DibujarTableroEnConsola(juego.getCells());
-                   
+
                 }
 
             }
 
-
         } else if (gameMode.equals("JugadorVsComputadora")) {
-            currentPlayer = initialSymbol;
-            Image im= new Image("images/bulb2.jpg");
+            currentPlayer = initialSymbol; //Simbolo del jugador
+            Image im = new Image("images/bulb2.jpg");
             PistaBtn.setImage(im);
             if (initialPlayer.equals("Computadora")) {
                 if (dificultadJuego.equals("Facil")) {
                     currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                     realizarMovimientoAleatiriosComputadora();
-            } else if (dificultadJuego.equals("Dificil")) {
-                
+                } else if (dificultadJuego.equals("Dificil")) {
 
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                realizarMovimientoComputadoraDificil();
-            }
+                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                    realizarMovimientoComputadoraDificil();
+                }
 
             }
         } else if (gameMode.equals("JugadorVsJugador")) {
@@ -128,21 +127,19 @@ public class TableroController implements Initializable {
         }
     }
 
-    
-   static void DibujarTableroEnConsola(char[][] board) {
-    Map<Character, String> symbols = Map.of('X', "X", 'O', "O", ' ', " ");
-    for (char[] row : board) {
-        for (char col : row) {
-            String symbol = symbols.get(col);
-            System.out.print("| " + symbol + " |");
+    static void DibujarTableroEnConsola(char[][] board) {
+        Map<Character, String> symbols = Map.of('X', "X", 'O', "O", ' ', " ");
+        for (char[] row : board) {
+            for (char col : row) {
+                String symbol = symbols.get(col);
+                System.out.print("| " + symbol + " |");
+            }
+            System.out.println("\n---------------");
+
         }
-        System.out.println("\n---------------");
-        
+        System.out.println("===============");
     }
-    System.out.println("===============");
-}
-    
-    
+
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
@@ -182,31 +179,31 @@ public class TableroController implements Initializable {
                 checkEstado();
 
             }
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; 
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
 
         } else if (gameMode.equals("JugadorVsComputadora")) {
             if (dificultadJuego.equals("Facil")) {
-                
+
                 int i = GridPane.getRowIndex(boton);
                 int j = GridPane.getColumnIndex(boton);
                 if (juego.getCells()[i][j] == ' ') {
                     juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                     boton.setText(currentPlayer + "");
                     boton.setDisable(true);
-                    boton.setStyle("-fx-background-color: #d6d2d2;");                    
+                    boton.setStyle("-fx-background-color: #d6d2d2;");
                     casillasDisponibles.remove(boton);
                     System.out.println(casillasDisponibles);
                     checkEstado();
 
                 }
-                
-                if(!juego.HayGanador(currentPlayer)){
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                realizarMovimientoAleatiriosComputadora();
+
+                if (!juego.HayGanador(currentPlayer)) {
+                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                    realizarMovimientoAleatiriosComputadora();
                 }
 
             } else if (dificultadJuego.equals("Dificil")) {
-                Image im= new Image("images/bulb2.jpg");
+                Image im = new Image("images/bulb2.jpg");
                 PistaBtn.setImage(im);
 
                 int i = GridPane.getRowIndex(boton);
@@ -215,7 +212,7 @@ public class TableroController implements Initializable {
                     juego.setSymbol(juego.getCells(), i, j, currentPlayer);
                     boton.setText(currentPlayer + "");
                     boton.setDisable(true);
-                    boton.setStyle("-fx-background-color: #d6d2d2;");                   
+                    boton.setStyle("-fx-background-color: #d6d2d2;");
                     casillasDisponibles.remove(boton);
                     System.out.println(casillasDisponibles);
                     checkEstado();
@@ -227,14 +224,11 @@ public class TableroController implements Initializable {
 
             }
 
-        }else if(gameMode.equals("ComputadoraVsComputadora")){
-            
-            
+        } else if (gameMode.equals("ComputadoraVsComputadora")) {
+
         }
     }
 
-    
-    
     private void realizarMovimientoAleatiriosComputadora() {
 
         int filaComputadora, columnaComputadora;
@@ -272,7 +266,6 @@ public class TableroController implements Initializable {
         }
     }
 
-
     public void realizarMovimientoComputadoraDificil() {
 
         if (gameMode.equals("ComputadoraVsComputadora")) {
@@ -289,76 +282,68 @@ public class TableroController implements Initializable {
 
             int[] move;
             if (symbolPlayer1 == 'X') {
+                
+                TreeNode root = new TreeNode(null, 0);
+                
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
+
+            } else {
+                
                 TreeNode root = new TreeNode(null, 0);
 
-                if (initialPlayer.equals("Computadora")) {
-                    move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
-                } else {
-                    move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, false, root);
-                }
-            } else {
-                TreeNode root = new TreeNode(null, 0);
-                if (initialPlayer.equals("Computadora")) {
-                    move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true, root);
-                } else {
-                    move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true, root);
-                }
+                move = juego.abminimax(9, Integer.MIN_VALUE, Integer.MAX_VALUE, true, root);
+
             }
 
             mover(move);
 
-        
-
         }
-
-    
 
     }
 
     private void mover(int[] move) {
         Button botonPC = null;
-        
-        if(juego.isEmpty(juego.getCells())){
- 
+
+        if (juego.isEmpty(juego.getCells())) {
+
             juego.setSymbol(juego.getCells(), 1, 1, currentPlayer);
-            botonPC = (Button)casillasDisponibles.get(4);
-            
+            botonPC = (Button) casillasDisponibles.get(4);
+
             botonPC.setText(currentPlayer + "");
             botonPC.setDisable(true);
             casillasDisponibles.remove(botonPC);
             checkEstado();
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-        }else{
+        } else {
             juego.setSymbol(juego.getCells(), move[0], move[1], currentPlayer);
 
-
-        for (Node nodo : casillasDisponibles) {
-            if (nodo instanceof Button) {
-                int i = GridPane.getRowIndex(nodo);
-                int j = GridPane.getColumnIndex(nodo);
-                if (i == move[0] && j == move[1]) {
-                    botonPC = (Button) nodo;
-                    break;
+            for (Node nodo : casillasDisponibles) {
+                if (nodo instanceof Button) {
+                    int i = GridPane.getRowIndex(nodo);
+                    int j = GridPane.getColumnIndex(nodo);
+                    if (i == move[0] && j == move[1]) {
+                        botonPC = (Button) nodo;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (botonPC != null) {
-            botonPC.setText(currentPlayer + "");
-            botonPC.setDisable(true);
-            casillasDisponibles.remove(botonPC);
-        } else {
-            
-            System.out.println(" ");
-        }
+            if (botonPC != null) {
+                botonPC.setText(currentPlayer + "");
+                botonPC.setDisable(true);
+                casillasDisponibles.remove(botonPC);
+            } else {
 
-        checkEstado();
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-        
+                System.out.println(" ");
+            }
+
+            checkEstado();
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+
         }
-        
 
     }
+
     private void quitarLoAmarillo() {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Button) {
@@ -371,11 +356,12 @@ public class TableroController implements Initializable {
 
         }
     }
+
     private void checkEstado() {
         if (juego.HayGanador(currentPlayer)) {
             desactivarBotones();
             resaltarGanador();
-            
+
             winnerLabel.setText("EL GANADOR ES: " + currentPlayer);
             winnerLabel.setAlignment(Pos.CENTER);
             Utility.styleLabel(winnerLabel, 30, true);
@@ -492,7 +478,7 @@ public class TableroController implements Initializable {
             if (suggestedButton != null) {
 
                 suggestedButton.setStyle("-fx-background-color: yellow;");
-                
+
             }
 
             System.out.println("pedi una pista");
@@ -500,7 +486,6 @@ public class TableroController implements Initializable {
         }
 
     }
-
 
     private Button encontrarBotonPorID(String id) {
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
@@ -511,6 +496,6 @@ public class TableroController implements Initializable {
                 }
             }
         }
-        return null; 
+        return null;
     }
 }
