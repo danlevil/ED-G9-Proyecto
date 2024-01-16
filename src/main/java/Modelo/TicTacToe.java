@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Estructuras.TreeNode;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,11 @@ import java.util.List;
  *
  * @author johan
  */
-public class TicTacToe implements Serializable{
+public class TicTacToe implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private char[][] cells;
     private char symbolPlayer;
-    
 
     public TicTacToe() {
         this.cells = new char[3][3];
@@ -27,7 +28,6 @@ public class TicTacToe implements Serializable{
         }
     }
 
-    
     public char[][] getCells() {
         return cells;
     }
@@ -100,11 +100,9 @@ public class TicTacToe implements Serializable{
 //        }
 //        return true;
 //    }
-    
-     public boolean isFull(char[][] board) {
+    public boolean isFull(char[][] board) {
         return posicionesVacias(board).size() == 0;
     }
-     
 
     // posiblemente se puede usar pero en el TebleroController ya se está usando una lista de nodos en este caso los nodos son los nodos del gridpanel
     static List<int[]> posicionesVacias(char[][] TableroDeJuego) {
@@ -118,10 +116,57 @@ public class TicTacToe implements Serializable{
         }
         return posicionesVacias;
     }
-    
-    
-    
-    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
+
+//    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer) {
+//        List<int[]> emptyCells = posicionesVacias(cells);
+//
+//        if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
+//            int score = getScore();
+//            return new int[]{-1, -1, score};
+//        }
+//
+//        int[] bestMove = new int[]{-1, -1, maximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE};
+//
+//        for (int[] cell : emptyCells) {
+//            int x = cell[0];
+//            int y = cell[1];
+//
+//            if (maximizingPlayer) {
+//                cells[x][y] = 'X';
+//                int[] currentMove = abminimax(depth - 1, alpha, beta, false);
+//                cells[x][y] = ' ';  // Deshacer el movimiento
+//
+//                if (currentMove[2] > bestMove[2]) {
+//                    bestMove[0] = x;
+//                    bestMove[1] = y;
+//                    bestMove[2] = currentMove[2];
+//                }
+//
+//                alpha = Math.max(alpha, bestMove[2]);
+//                if (beta <= alpha) {
+//                    break;  // Poda alfa-beta
+//                }
+//            } else {
+//                cells[x][y] = 'O';
+//                int[] currentMove = abminimax(depth - 1, alpha, beta, true);
+//                cells[x][y] = ' ';  // Deshacer el movimiento
+//
+//                if (currentMove[2] < bestMove[2]) {
+//                    bestMove[0] = x;
+//                    bestMove[1] = y;
+//                    bestMove[2] = currentMove[2];
+//                }
+//
+//                beta = Math.min(beta, bestMove[2]);
+//                if (beta <= alpha) {
+//                    break;  // Poda alfa-beta
+//                }
+//            }
+//        }
+//
+//        return bestMove;
+//    }
+    public int[] abminimax(int depth, int alpha, int beta, boolean maximizingPlayer, TreeNode node) {
         List<int[]> emptyCells = posicionesVacias(cells);
 
         if (depth == 0 || HayGanador('X') || HayGanador('O') || emptyCells.isEmpty()) {
@@ -135,32 +180,29 @@ public class TicTacToe implements Serializable{
             int x = cell[0];
             int y = cell[1];
 
+            cells[x][y] = maximizingPlayer ? 'X' : 'O';
+            TreeNode child = new TreeNode(null, 0);
+            node.addChild(child);
+
+            int[] currentMove = abminimax(depth - 1, alpha, beta, !maximizingPlayer, child);
+            cells[x][y] = ' ';  // Deshacer el movimiento
+
+            child.setMove(new int[]{x, y});
+            child.setScore(currentMove[2]);
+
+            if ((maximizingPlayer && currentMove[2] > bestMove[2])
+                    || (!maximizingPlayer && currentMove[2] < bestMove[2])) {
+                bestMove[0] = x;
+                bestMove[1] = y;
+                bestMove[2] = currentMove[2];
+            }
+
             if (maximizingPlayer) {
-                cells[x][y] = 'X';
-                int[] currentMove = abminimax(depth - 1, alpha, beta, false);
-                cells[x][y] = ' ';  // Deshacer el movimiento
-
-                if (currentMove[2] > bestMove[2]) {
-                    bestMove[0] = x;
-                    bestMove[1] = y;
-                    bestMove[2] = currentMove[2];
-                }
-
                 alpha = Math.max(alpha, bestMove[2]);
                 if (beta <= alpha) {
                     break;  // Poda alfa-beta
                 }
             } else {
-                cells[x][y] = 'O';
-                int[] currentMove = abminimax(depth - 1, alpha, beta, true);
-                cells[x][y] = ' ';  // Deshacer el movimiento
-
-                if (currentMove[2] < bestMove[2]) {
-                    bestMove[0] = x;
-                    bestMove[1] = y;
-                    bestMove[2] = currentMove[2];
-                }
-
                 beta = Math.min(beta, bestMove[2]);
                 if (beta <= alpha) {
                     break;  // Poda alfa-beta
@@ -181,9 +223,7 @@ public class TicTacToe implements Serializable{
             return 0;
         }
     }
-    
-    
-    
+
     public boolean HayGanador(char symbol) {
 
         if (esDiagonalGanadora(symbol) || esAntiDiagonalGanadora(symbol)) {
@@ -200,7 +240,3 @@ public class TicTacToe implements Serializable{
     }
 
 }
-
-
-
-

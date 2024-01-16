@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -72,13 +73,11 @@ public class MenuController implements Initializable {
 
     }
 
-  
-    
     @FXML
     private void modo1(ActionEvent event) throws IOException {
         gameMode = "JugadorVsComputadora";
         abrirVentanaDificultad();
-        
+
     }
 
     @FXML
@@ -92,9 +91,9 @@ public class MenuController implements Initializable {
     @FXML
     private void modo3(ActionEvent event) {
         gameMode = "JugadorVsJugador";
-        if (initialPlayer() && chooseSymbol()) {
-        openGameWindow();
-    }
+        if (chooseSymbol() && initialPlayer() ) {
+            openGameWindow();
+        }
     }
 
     private void openGameWindow() {
@@ -121,51 +120,63 @@ public class MenuController implements Initializable {
             e.printStackTrace();
         }
     }
-    
-    private void abrirVentanaDificultad() throws IOException{
+
+    private void abrirVentanaDificultad() throws IOException {
         App.setRoot("ElegirDificultad");
-   
+
     }
 
     private boolean chooseSymbol() {
         ButtonType buttonTypeX = new ButtonType("X");
         ButtonType buttonTypeO = new ButtonType("O");
+        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona símbolo");
         alert.setHeaderText("¿Qué símbolo quieres para Jugador 1?");
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(buttonTypeX, buttonTypeO);
-        alert.showAndWait();
-        ButtonType buttonType = alert.getResult();
-        symbolPlayer1 = buttonType.getText().charAt(0);
-        System.out.println(symbolPlayer1);
-        return true;
+        alert.getButtonTypes().setAll(buttonTypeX, buttonTypeO, buttonTypeCancel);
+
+        Button cancelButton = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
+        cancelButton.setVisible(false);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() != buttonTypeCancel) {
+            symbolPlayer1 = result.get().getText().charAt(0);
+            System.out.println(symbolPlayer1);
+            return true;
+        }
+
+        return false;
     }
 
     private boolean initialPlayer() {
+        ButtonType buttonTypeX = new ButtonType("X");
+        ButtonType buttonTypeO = new ButtonType("O");
+        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Selecciona Turno");
         alert.setHeaderText("¿Qué símbolo quieres que empiece el juego?");
-        ButtonType buttonTypeX = new ButtonType("X");
-        ButtonType buttonTypeO = new ButtonType("O");
-        alert.getButtonTypes().setAll(buttonTypeX, buttonTypeO);
+        alert.getButtonTypes().setAll(buttonTypeX, buttonTypeO, buttonTypeCancel);
+
+        Button cancelButton = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
+        cancelButton.setVisible(false);
+
         Optional<ButtonType> resultado = alert.showAndWait();
-        if(resultado.isPresent()){
-          initialSymbol = resultado.get().getText().charAt(0);
-          System.out.println(initialSymbol);  
-          return true;
-        }else{
-          
+
+        if (resultado.isPresent() && resultado.get() != buttonTypeCancel) {
+            initialSymbol = resultado.get().getText().charAt(0);
+            System.out.println(initialSymbol);
+            return true;
         }
+
         return false;
     }
 
     @FXML
     private void abrirMenuDeOpciones(MouseEvent event) {
-        
-        
-        
+
     }
 
 }

@@ -1,46 +1,80 @@
 package Estructuras;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TreeNode<E> {
+public class TreeNode {
 
-    private E content;
-    private List<Tree<E>> children;
+    private int[] move;
+    private int score;
+    private List<TreeNode> children;
 
-    public TreeNode(E content) {
-        this.content = content;
-        this.children = new LinkedList<>();
+    public TreeNode(int[] move, int score) {
+        this.move = move;
+        this.score = score;
+        this.children = new ArrayList<>();
     }
 
-    public E getContent() {
-        return content;
+    public int[] getMove() {
+        return move;
     }
 
-    public void setContent(E content) {
-        this.content = content;
+    public int getScore() {
+        return score;
     }
 
-    public List<Tree<E>> getChildren() {
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public List<TreeNode> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Tree<E>> children) {
-        this.children = children;
+    public void addChild(TreeNode child) {
+        children.add(child);
     }
 
-    @Override
-    public String toString() {
-        return "TreeNode{" + "content=" + content + "children={" + children + "} }";
-    }
-
-    public void addChild(E childContent) {
-        TreeNode<E> childNode = new TreeNode<>(childContent);
-        this.children.add(new Tree<>(childNode));
-    }
-
-    public boolean removeChild(E childContent) {
-        return this.children.removeIf(childTree -> childTree.getRoot().equals(childContent));
+    public void setMove(int[] move) {
+        this.move = move;
     }
 
 }
+
+//    private E content;
+//    private List<Tree<E>> children;
+//
+//    public TreeNode(E content) {
+//        this.content = content;
+//        this.children = new LinkedList<>();
+//    }
+//
+//    public E getContent() {
+//        return content;
+//    }
+//
+//    public void setContent(E content) {
+//        this.content = content;
+//    }
+//
+//    public List<Tree<E>> getChildren() {
+//        return children;
+//    }
+//
+//    public void setChildren(List<Tree<E>> children) {
+//        this.children = children;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "TreeNode{" + "content=" + content + "children={" + children + "} }";
+//    }
+//
+//    public void addChild(E childContent) {
+//        TreeNode<E> childNode = new TreeNode<>(childContent);
+//        this.children.add(new Tree<>(childNode));
+//    }
+//
+//    public boolean removeChild(E childContent) {
+//        return this.children.removeIf(childTree -> childTree.getRoot().equals(childContent));
+//    }
