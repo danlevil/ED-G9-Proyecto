@@ -198,8 +198,11 @@ public class TableroController implements Initializable {
                     checkEstado();
 
                 }
+                
+                if(!juego.HayGanador(currentPlayer)){
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
                 realizarMovimientoAleatiriosComputadora();
+                }
 
             } else if (dificultadJuego.equals("Dificil")) {
                 Image im= new Image("images/bulb2.jpg");
