@@ -1,6 +1,7 @@
 package Estructuras;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TreeNode {
@@ -16,7 +17,7 @@ public class TreeNode {
     }
 
     public int[] getMove() {
-        return move;
+        return Arrays.copyOf(move, move.length);
     }
 
     public int getScore() {
