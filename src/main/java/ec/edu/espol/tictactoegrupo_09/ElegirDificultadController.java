@@ -23,6 +23,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+/*import java.util.logging.Logger;
+import java.util.logging.Level; */
 
 /**
  * FXML Controller class
@@ -77,7 +79,9 @@ public class ElegirDificultadController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
-                } catch (IOException e) {
+                } catch (IOException e) {  /*catch (Exception e) {
+    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+} */
                     e.printStackTrace();
                 }
             }
