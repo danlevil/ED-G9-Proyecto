@@ -54,7 +54,7 @@ public class TableroController implements Initializable {
     List<Node> casillasDisponibles;
     @FXML
     private int filaSugerida;
-    private int colSugerida;
+  
     @FXML
     private ImageView PistaBtn;
 
