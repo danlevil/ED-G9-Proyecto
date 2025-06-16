@@ -48,7 +48,7 @@ public class TicTacToe implements Serializable {
         if (x >= 0 && x < tablero.length && y >= 0 && y < tablero[x].length) {
             tablero[x][y] = symbolPlayer;
         } else {
-            System.out.println(" ");
+            throw new IndexOutOfBoundsException("Índice fuera de los límites del tablero.");
         }
     }
 
