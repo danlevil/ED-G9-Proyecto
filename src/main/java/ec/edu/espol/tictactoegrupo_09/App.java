@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 public class App extends Application {
 
     private static Scene scene;
-    private Button[] buttons = new Button[9];
+    private Button[] buttons = new Button[9]; // This will hold the buttons for the Tic Tac Toe grid
     private char currentPlayer = 'X';
 
     @Override
